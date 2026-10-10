@@ -62,6 +62,8 @@ constexpr bool  PICKUP_HIDE_ON = true;                     // false = probe only
 constexpr const char* PICKUP_HIDE[] = {"GUIBlackMask"};    // GUI elements not drawn during a pick-up (first guess)
 constexpr int   PICKUP_GIVE_UP_FRAMES = 300;               // the inventory never read open this long after the call: stop
 constexpr int   PICKUP_NAME_CACHE = 512;                   // element names remembered per pick-up
+constexpr bool  PICKUP_KEEP_WORLD_CAMERA = true;           // b144: skip the game's item camera in a pick-up (the world stays behind it)
+constexpr int   PICKUP_COMING_FRAMES = 30;                 // b145: after ItemGetMenu.start, the next item camera this many frames on is a pick-up's
 
 // ---- every menu over the live game world: no tint, no blur (b128, 2026-10-10, Tefa's screenshot) -------------
 // The inventory's post effect (colour filter + blur) is never switched on: every mode takes the use-item path. See
@@ -142,11 +144,18 @@ constexpr float SFX_MASTER = 1.0f;
 
 // ---- bundle 2: slide rack, pump, shells (2026-10-10; rack.h, pump_native.h) ---------------------------------------
 constexpr float RACK_HAND_M = 0.20f;          // the left hand this close to the slide / fore-end joint when LG is pressed
-constexpr float RACK_PULL_PER_SEC = 7.0f;     // his trigger_pull_travel_speed (0..1 per second)
-constexpr float RACK_PUSH_PER_SEC = 5.0f;     // his trigger_push_travel_speed
+constexpr float RACK_PULL_M = 0.05f;          // his pull_dist_default: the left controller this far back along the gun = pulled
+constexpr float RACK_FOLLOW = 0.5f;           // the slide follows the hand with this much smoothing per frame (1 = raw)
+constexpr float RACK_RETURN_PER_SEC = 5.0f;   // let go mid-way: the slide springs back at this rate (0..1 per second)
+constexpr float SLIDE_PARK_SCALE = 1.5f;      // the locked-open slide sits this much further back than his parked (Tefa: "a little further")
+constexpr Vec3  SLIDE_DOCK_OFF = {0.0f, 0.0f, 0.0f};   // where the hand sits on the slide, in the slide joint's axes (b143: the joint itself; his dock_off is for his hand model)
 constexpr float RACK_BUZZ_AMP = 0.7f, RACK_BUZZ_SEC = 0.06f;
 constexpr bool  PUMP_NATIVE_ON = true;        // cut the game's own pump animation, hold the shell eject for our pull
 constexpr float PUMP_WINDOW_SEC = 2.5f;       // his pump_window_sec
+constexpr float HUD_AFTER_RELOAD_SEC = 5.0f;  // the ammo counter stays up this long after a magazine / shell / rack (Tefa 2026-10-10)
+// where a shotgun shell sits in the left hand (wrist axes, metres; yaw/pitch/roll degrees). OURS, a first guess (b142).
+struct ShellHold { float ox, oy, oz, yaw, pitch, roll; };
+constexpr ShellHold SHELL_HOLD = {0.06f, -0.03f, 0.02f, 0.0f, 90.0f, 0.0f};
 
 // ---- the sub weapon from the back holster on RG; RG never aims (b134, 2026-10-10; subweapon.h) ------------------
 constexpr bool  SUB_ON_RG = true;            // false = the game's way (left grip readies the sub weapon, right grip aims)

@@ -42,6 +42,35 @@ int pre_open_get_item(int, void**, REFrameworkTypeDefinitionHandle*, unsigned lo
 
 void post_open_get_item(void**, REFrameworkTypeDefinitionHandle, unsigned long long) {}
 
+// b144: the pick-up screen is a grey-green floor under a black sky (Tefa's screenshot 2026-10-10 15:53): the game
+// switches to its own item camera (CameraSystem.startInventoryCamera -> the InventoryCameraController's stage). Every
+// camera switch is logged with whether a pick-up is up; in a pick-up, startInventoryCamera is SKIPPED so the player's
+// camera (the world) stays, like the use-item screen. cfg::PICKUP_KEEP_WORLD_CAMERA off = log only.
+std::atomic<int> g_cam_logs{0};
+// b145: the item camera starts BEFORE openInventoryGetItemMode (b144 log 21:06:03: start, then GetItem, "pick-up up 0"),
+// so the pick-up is known earlier: the fsm action ItemGetMenu.start runs first. Its frame stamps g_coming.
+std::atomic<int> g_coming_frames{0};
+int pre_itemget_start(int, void**, REFrameworkTypeDefinitionHandle*, unsigned long long) {
+    g_coming_frames = cfg::PICKUP_COMING_FRAMES;
+    if (g_cam_logs.fetch_add(1) < 60) LOGI("%s pickup: ItemGetMenu.start -- a pick-up is coming", TAG);
+    return REFRAMEWORK_HOOK_CALL_ORIGINAL;
+}
+int pre_start_inv_cam(int, void**, REFrameworkTypeDefinitionHandle*, unsigned long long) {
+    const bool pick = g_on || g_coming_frames.load() > 0;
+    const bool skip = pick && cfg::PICKUP_KEEP_WORLD_CAMERA;   // flat too: the monitor shows the same stage since our GuiBack skip
+    if (g_cam_logs.fetch_add(1) < 60) LOGI("%s pickup: CameraSystem.startInventoryCamera (pick-up up %d): %s", TAG, (int)g_on.load(), skip ? "SKIPPED, the world camera stays" : "let through");
+    return skip ? REFRAMEWORK_HOOK_SKIP_ORIGINAL : REFRAMEWORK_HOOK_CALL_ORIGINAL;
+}
+bool g_skipped_end = false;
+int pre_end_inv_cam(int, void**, REFrameworkTypeDefinitionHandle*, unsigned long long) {
+    if (g_cam_logs.fetch_add(1) < 60) LOGI("%s pickup: CameraSystem.endInventoryCamera (pick-up up %d)", TAG, (int)g_on.load());
+    return REFRAMEWORK_HOOK_CALL_ORIGINAL;
+}
+int pre_switch_cam(int argc, void** argv, REFrameworkTypeDefinitionHandle*, unsigned long long) {
+    if (g_cam_logs.fetch_add(1) < 60) LOGI("%s pickup: CameraSystem.switchCamera to type %d (pick-up up %d)", TAG, argc > 2 ? (int)(intptr_t)argv[2] : -1, (int)g_on.load());
+    return REFRAMEWORK_HOOK_CALL_ORIGINAL;
+}
+
 bool is_hidden_name(const std::string& n) {
     for (const char* h : cfg::PICKUP_HIDE)
         if (n == h) return true;
@@ -54,10 +83,18 @@ void install() {
     if (m == nullptr) { LOGE("%s pickup: openInventoryGetItemMode not found, pick-up probe off", TAG); return; }
     m->add_hook(pre_open_get_item, post_open_get_item, false);
     LOGI("%s pickup: openInventoryGetItemMode hook in (probe + skip %s)", TAG, cfg::PICKUP_HIDE_ON ? "on" : "off");
+    const char* CS = "offline.camera.CameraSystem";
+    if (auto* a = API::get()->tdb()->find_method(CS, "startInventoryCamera")) a->add_hook(pre_start_inv_cam, post_open_get_item, false);
+    if (auto* b = API::get()->tdb()->find_method(CS, "endInventoryCamera")) b->add_hook(pre_end_inv_cam, post_open_get_item, false);
+    if (auto* c = API::get()->tdb()->find_method(CS, "switchCamera")) c->add_hook(pre_switch_cam, post_open_get_item, false);
+    if (auto* d = API::get()->tdb()->find_method("offline.fsmv2.ItemGetMenu", "start")) d->add_hook(pre_itemget_start, post_open_get_item, false);
+    else LOGW("%s pickup: ItemGetMenu.start not found", TAG);
+    LOGI("%s pickup: camera switch hooks in (keep the world camera in a pick-up: %s)", TAG, cfg::PICKUP_KEEP_WORLD_CAMERA ? "on" : "off");
 }
 
 void frame() {
     g_live = bridge::live();
+    if (g_coming_frames.load() > 0) --g_coming_frames;
     if (!g_on) return;
     const bool open = menu_body::is_menu_open();
     if (open) g_seen_open = true;
