@@ -11,3 +11,10 @@ Numbers are metres ahead of the view, flattened, from probe-log.txt `[verified-l
 With es_2000 the body stays behind the view when she stops, so nothing pushes forward. It sways a few cm in its 4.8 s
 loop (the speed column reads 0.02-0.05 m/s) and the feet stand ~0.2 m behind the head; Tefa saw nothing wrong.
 Installed: swap_idle_re3.py --idle es_2000_TypeA_Gazing_Idle_F_Loop over the port 1+2 lists + cmn (Jill only).
+
+## Correction, 23:53 (Tefa, worn longer)
+
+es_2000 is NOT fine: "it's like a combat ready stance with body hunched ... the body bend too much backwards now. it
+looks like the game's idle pose when i put my controllers down." Taken out; 0161 Relax is back (it pushes ~8 cm, but
+looks like a normal stance). es_2000 natives kept in D:/RE3 REFramework builds/natives-idle-es2000-hunched-2026-10-10.
+Next idea, untested: an upright standing pose made from the walk (its body sits behind the view like walking).

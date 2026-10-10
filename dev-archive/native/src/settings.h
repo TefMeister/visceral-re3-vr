@@ -58,11 +58,13 @@ constexpr int   SUBPROBE_MAX_LINES = 400;   // b113 probe: change lines logged p
 
 // ---- item pick-up without the black screen (b110, 2026-10-09, board row 6b) -----------------------------------
 // Only while the game's get-item inventory is up (a pick-up) and the headset is live. See pickup.h.
-constexpr bool  PICKUP_HIDE_ON = true;                     // false = probe only, nothing skipped
+constexpr bool  PICKUP_HIDE_ON = false;                    // false = probe only, nothing skipped
 constexpr const char* PICKUP_HIDE[] = {"GUIBlackMask"};    // GUI elements not drawn during a pick-up (first guess)
 constexpr int   PICKUP_GIVE_UP_FRAMES = 300;               // the inventory never read open this long after the call: stop
 constexpr int   PICKUP_NAME_CACHE = 512;                   // element names remembered per pick-up
-constexpr bool  PICKUP_KEEP_WORLD_CAMERA = true;           // b144: skip the game's item camera in a pick-up (the world stays behind it)
+constexpr bool  PICKUP_KEEP_WORLD_CAMERA = false;          // b144: skip the game's item camera in a pick-up (the world stays behind it)
+// RE3 2026-10-10 (Tefa, worn): with the item camera skipped and GUIBlackMask hidden, the pick-up showed only black + the
+// item's name, and the inventory grid stayed empty until it closed. RE3 draws those in the item camera's stage: both OFF.
 constexpr int   PICKUP_COMING_FRAMES = 30;                 // b145: after ItemGetMenu.start, the next item camera this many frames on is a pick-up's
 
 // ---- every menu over the live game world: no tint, no blur (b128, 2026-10-10, Tefa's screenshot) -------------
