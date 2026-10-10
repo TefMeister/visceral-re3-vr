@@ -55,6 +55,23 @@ float now_s() {
     return std::chrono::duration<float>(std::chrono::steady_clock::now() - t0).count();
 }
 
+float g_hud_until = -1.0f;
+MO* g_hud = nullptr;   // the RemainingBulletBehavior, caught from its own getter (b143: the getter's answer was ignored, b142 worn)
+int pre_hud_request(int argc, void** argv, REFrameworkTypeDefinitionHandle*, unsigned long long) {
+    if (argc > 1 && is_managed(argv[1]) && g_hud != (MO*)argv[1]) { g_hud = (MO*)argv[1]; g_hud->add_ref(); }
+    return REFRAMEWORK_HOOK_CALL_ORIGINAL;
+}
+void post_hud_request(void** ret_val, REFrameworkTypeDefinitionHandle, unsigned long long) {
+    if (ret_val == nullptr || g_hud_until < 0.0f || now_s() > g_hud_until) return;
+    *ret_val = (void*)(uintptr_t)1;
+}
+void hud_tick() {
+    if (g_hud == nullptr || g_hud_until < 0.0f || now_s() > g_hud_until) return;
+    call_direct<void*>(g_hud, "set_RequestDraw", nullptr, true);
+    call_direct<void*>(g_hud, "set_IsDraw", nullptr, true);
+}
+
+
 bool blocking() { return cfg::RELOAD_ON && g_commit == 0 && reload::managed_now() && !menu_body::is_menu_open(); }
 
 int pre_skip_reload(int, void**, REFrameworkTypeDefinitionHandle*, unsigned long long) {
@@ -133,6 +150,8 @@ void clear_bit(char* bb, uint64_t kind) {
 }
 } // namespace
 
+void show_ammo_counter(float seconds) { g_hud_until = now_s() + seconds; }
+
 Commit::Commit() { ++g_commit; }
 Commit::~Commit() { --g_commit; }
 
@@ -147,13 +166,36 @@ void install() {
     hook(EQ, "requestFire", pre_fire, post_nop, "no shot with the magazine out");
     hook(EQ, "requestFire", pre_fire_count, post_fire_count, "dry-fire click on an empty gun");
     hook("offline.gamemastering.InventoryManager", "getMainWeaponRemainingBullet", pre_nop, post_hud_rounds, "HUD reads 0 with the magazine out");
-    hook("offline.survivor.SurvivorCondition", "get_IsReload", pre_nop, post_is_reload, "no reload state for our guns");
+    hook("offline.gui.RemainingBulletBehavior", "get_RequestDraw", pre_hud_request, post_hud_request, "the ammo counter shown after a reload (Tefa: 5 s)");
+    // b141: the get_IsReload spoof is OUT. Worn 2026-10-10 (b140): guns shot with sound but no flash and no counter, and a
+    // shotgun sat in the game's shell-loading hand pose forever -- the game's own reload state had started and, told it
+    // was not reloading while its inner steps were skipped, never left it [hypothesis]. The orderer inhibit alone is what
+    // stopped the animation on B (b133). The state is now WATCHED instead (frame()).
     hook("offline.survivor.player.PlayerActionOrderer", "doSurvivorActionOrdererUpdate", pre_nop, post_orderer_update, "no reload action for our guns");
+}
+
+bool g_game_reload = false;
+float g_game_reload_t0 = 0.0f;
+void watch_game_reload() {   // the game's own reload state, which our guns should never enter
+    auto* go = call_ptr(API::get()->get_managed_singleton("offline.PlayerManager"), "get_CurrentPlayer");
+    auto* cond = component(go, "offline.survivor.SurvivorCondition");
+    const bool r = call_direct<bool>(cond, "get_IsReload", false);
+    if (r && !g_game_reload) { g_game_reload_t0 = now_s(); LOGW("%s block: THE GAME ENTERED ITS OWN RELOAD STATE on WP%04d (ours; this is the stuck-hand case if it stays)", TAG, reload::wp_now()); }
+    else if (!r && g_game_reload) LOGI("%s block: the game's reload state ended after %.2f s", TAG, now_s() - g_game_reload_t0);
+    g_game_reload = r;
 }
 
 void frame() {
     if (!cfg::RELOAD_ON) return;
     const bool ours = reload::managed_now(), session = reload::session_active();
+    if (ours) watch_game_reload();
+    hud_tick();
+    // b142: the trigger with the magazine out or a rack needed: the click (fire.cpp no longer forces the shot, so
+    // requestFire is never reached and the click has to come from the press itself)
+    if (ours && bridge::pressed(bridge::S_RTRIG) && !menu_body::is_menu_open()) {
+        auto* gun = field_obj(component(call_ptr(API::get()->get_managed_singleton("offline.PlayerManager"), "get_CurrentPlayer"), "offline.survivor.Equipment"), "<EquipWeapon>k__BackingField");
+        if (reload::mag_out() || rack::blocks_fire() || call_direct<int>(gun, "getBulletNumber", -1) == 0) dry_click();
+    }
     if (ours) inhibit_reload(true);
     else if (g_inhibited) inhibit_reload(false);   // a shotgun, revolver or no headset: the game's reload is back
     if (menu_body::is_menu_open()) return;
