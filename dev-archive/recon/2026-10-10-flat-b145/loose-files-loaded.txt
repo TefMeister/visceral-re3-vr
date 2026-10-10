@@ -1,0 +1,18 @@
+leLoader constructed
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/CMN/BASE_CMN_MOVE.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/HDG/BASE_HDG_HOLD.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/HDG/BASE_HDG_MOVE.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/MLE/BASE_MLE_HOLD.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/SMG/BASE_SMG_HOLD.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/Character/Player/Pl2000/Animation/list/STG/BASE_STG_MOVE.motlist.524
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/HoldGrenade.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/HoldKnife.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_GG.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_HG.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_HG_hp.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_HackTool.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_RL.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_SG.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_SMG.user.2
+m\steamapps\common\RE3/natives/STM/Escape/UserData/Character/Survivor/common/LookAt/Hold_WP0800.user.2

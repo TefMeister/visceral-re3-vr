@@ -29,3 +29,18 @@
 - visceral_native.dll: built from `dev-archive/native` (b145 level)
 - autorun: visceral_bridge (b145), visceral_mute_music, the three body scripts, praydog's own scripts
 - natives: the relaxed lists plus the idle swap for Jill
+
+## 21:23 flat check (/lm, no headset)
+
+- With no headset, REFramework could not open OpenXR and the game ran flat. The route from boot to Continue worked by
+  keyboard: Insert, Enter, Space, Space. Recorded: `b145 port flat check_2026-10-10_21-23-34.mp4`.
+- The loose-file loader starts now and RE3 loads our files: cmn/base_cmn_move (the idle swap), hdg hold/move, mle hold,
+  smg hold, stg move, and all 11 look-at files `[verified-live 2026-10-10, n=1]`.
+- Every new b145 hook went in, with one exception: `offline.gui.RemainingBulletBehavior.get_RequestDraw` is missing in
+  RE3, so **the ammo counter after a reload will not show** until RE3's own way is found `[verified-live 2026-10-10, n=1]`.
+  Missing as expected: equipSubSlot*, NewInventoryBehavior (menu tint).
+- The rack found a slide joint on RE3's G19: "WP0000 joint _01 rests at local 0.000 0.073 0.062 (his rest 0.060)".
+  Promising, but not tried.
+- Still open: the motion-name log only runs in VR, so a flat run cannot show which idle actually plays. That needs
+  Tefa's eyes in the headset.
+- Evidence: `dev-archive/recon/2026-10-10-flat-b145/`.
