@@ -24,9 +24,10 @@ Usage:
 folder it boots with a fresh config that lacks TargetPlatform=DirectX12 and stays BLACK before the title (VR logs
 "Failed to get primary camera" every frame). Always use `launch`, never a bare `start re3.exe` from another folder.
 """
+import os
 import ctypes, ctypes.wintypes as w, importlib.util, os, sys, time
 
-TOOLKIT = r"~\github-backups\flat-to-vr-RE-toolkit\tools\game-harness.py"
+TOOLKIT = os.path.join(os.path.expanduser("~"), "github-backups", "flat-to-vr-RE-toolkit", "tools", "game-harness.py")
 # 2026-09-27 (Tefa): nothing of Visceral goes into the real game folder; this targeted the TEST COPY.
 # 2026-10-04 (Tefa): the test copy is deleted, we mod the Steam game again (build.sh --deploy goes there too).
 GAME = r"C:\Steam\steamapps\common\RE3"
