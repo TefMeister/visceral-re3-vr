@@ -13,4 +13,4 @@ Resident Evil 3 (2020) — Capcom. A legitimate copy is needed to use anything h
 | Source / Work | Creator(s) | Link |
 | --- | --- | --- |
 | REFramework (mod framework, VR support for RE2 and RE3, Lua API) | praydog | https://github.com/praydog/REFramework |
-| RE2 (2019) VR gameplay pack, Nexus mod 2483 (author not yet confirmed) | its Nexus author | https://www.nexusmods.com/residentevil22019/mods/2483 |
+| RE2 (2019) VR gameplay pack, Nexus mod 2483 | Andyalpa | https://www.nexusmods.com/residentevil22019/mods/2483 |
