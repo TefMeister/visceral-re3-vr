@@ -22,3 +22,7 @@ already does for the hands), then a menu with sliders like the RE2 hand tuning m
 found, the menu part is reusable.
 
 ---
+
+Chosen by Tefa: 2026-10-15
+
+**Tefa 2026-10-15, for RE3:** "re3 can just use emv engine" -- use alphaZomega's EMV Engine itself here; no poser of our own for RE3.
