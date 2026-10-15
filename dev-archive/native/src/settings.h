@@ -123,7 +123,7 @@ constexpr int   MENU_CAM_SETTLE_FRAMES  = 3;  // b102: released only once FirstP
 constexpr int   FIRE_WINDOW_FRAMES = 20;      // the gun's "may fire" answer stays YES at most this long after the press
 constexpr int   FIRE_LOG_FIRST     = 30;
 // automatics fire while RT is held (WP numbers): MQ 11, LE 5, flamethrower, the miniguns. Everything else: one per pull
-constexpr int   FIRE_AUTOMATIC_WP[] = {2000, 2200, 4200, 4700, 8700, 4520, 4900};      // log the first shots in full (press + bullets before/after + doorbells)
+constexpr int   FIRE_AUTOMATIC_WP[] = {2000, 2100, 2200, 4200, 4700, 8700, 4520, 4900};   // RE3: 2000 CQBR + 2100 the second rifle [hypothesis] (2026-10-15)      // log the first shots in full (press + bullets before/after + doorbells)
 
 // ---- manual magazine reload, bundle 1 of the RELOADED port (2026-10-10; reload.h, reload_block.h, sfx.h) ----------
 // Times and distances are Andyalpa's (re2_vr_reload.json `anim`, `mag_holster`); per-weapon numbers in reload_data.h.

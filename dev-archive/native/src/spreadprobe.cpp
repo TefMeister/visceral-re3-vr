@@ -38,7 +38,7 @@ void frame() {
     auto* cond = component(go, "offline.survivor.SurvivorCondition");
     if (eq == nullptr || cond == nullptr) return;
     const int wp = weapons::current_id();
-    if (wp < 0 || wp == 4500 || wp == 4510 || wp == 6200 || wp == 6300) { g_last_wp = wp; return; }   // guns only
+    if (wp < 0 || weapons::is_sub(wp)) { g_last_wp = wp; return; }   // guns only
     if (wp != g_last_wp) { g_last_wp = wp; log_param(eq, wp); ++g_lines; }
 
     auto* fitp = field_ptr<float>(eq, "_ReticleFitPoint");

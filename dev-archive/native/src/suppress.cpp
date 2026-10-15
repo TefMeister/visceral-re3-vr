@@ -138,7 +138,7 @@ void post_forbid(void** ret_val, REFrameworkTypeDefinitionHandle, unsigned long 
 
 bool sub_weapon_in_hand() {
     const int wp = weapons::current_id();
-    return wp == 4500 || wp == 4510 || wp == 6200 || wp == 6300;   // knives, hand + flash grenade
+    return weapons::is_sub(wp);   // knives, hand + flash grenade (the weapons table's SUB list)
 }
 
 } // namespace

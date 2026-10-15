@@ -41,6 +41,7 @@
 #include "subweapon.h"
 #include "spreadprobe.h"
 #include "suppress.h"
+#include "re3check.h"
 
 using namespace vn;
 
@@ -65,6 +66,7 @@ void on_frame() {
     pickup::frame();
     menu_tint::frame();
     options::frame();
+    re3check::frame();                             // 2026-10-15: RE2 numbers and joint names checked against RE3 (logs only)
     menu_probe::point("UpdateBehavior.ours-done");
 }
 } // namespace
