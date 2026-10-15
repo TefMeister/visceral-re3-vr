@@ -18,3 +18,7 @@ running shoulder, elbow, wrist, fingers; moving a real hand in front of the came
 ports already find these joints by hand for each game, so the first step is writing that search down as one tool,
 then a shared slider menu (like the RE2 hand tuning menu) on top. The hard part is games whose skeleton is rebuilt
 every frame by the animation, where a change has to be written at the right moment each frame.
+
+Chosen by Tefa: 2026-10-15
+
+**Tefa 2026-10-15, for RE3:** "re3 can just use emv engine" -- use alphaZomega's EMV Engine itself here; no poser of our own for RE3.
