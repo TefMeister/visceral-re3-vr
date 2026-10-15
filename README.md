@@ -1,8 +1,9 @@
 # Visceral VR — Resident Evil 3 (2020)
 
-**Private, work in progress.** Visceral for RE3 brings the features of
+**Work in progress.** Visceral for RE3 brings the features of
 [Visceral RE2](https://github.com/TefMeister/visceral-re2-vr) over to Resident Evil 3, on top of praydog's
-REFramework VR. Work began on 2026-10-10. Nothing here is released.
+REFramework VR. Work began on 2026-10-10. The first build, 0.1.0 (2026-10-11), is on the
+[Releases page](https://github.com/TefMeister/visceral-re3-vr/releases).
 
 | Folder | What it holds |
 | --- | --- |
