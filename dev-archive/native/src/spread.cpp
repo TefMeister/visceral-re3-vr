@@ -21,7 +21,7 @@ Player player() {
     return {component(go, "offline.survivor.Equipment"), component(go, "offline.survivor.SurvivorCondition")};
 }
 
-bool is_gun(int wp) { return wp >= 0 && wp != 4500 && wp != 4510 && wp != 6200 && wp != 6300; }
+bool is_gun(int wp) { return wp >= 0 && !weapons::is_sub(wp); }
 
 struct Choice { float share; const char* why; };   // share of the gun's best accuracy; < 0 = leave the game's value
 

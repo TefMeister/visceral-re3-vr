@@ -12,9 +12,6 @@
 namespace vn::shortcut {
 
 namespace {
-// knife, unbreakable knife, hand grenade, flash grenade (RE Modding forum ID list, 2026-10-05)
-constexpr int SUB_WEAPONS[] = {4500, 4510, 6200, 6300};
-
 thread_local int t_asked_type = -1;     // enableShortcut's argument, carried from the pre to the post hook
 std::atomic<int> g_logged_calls{0};
 constexpr int LOG_FIRST_CALLS = 8;
@@ -33,9 +30,7 @@ MO* slot_at(Dir d) {
 }
 
 bool is_sub_weapon(int enum_value) {
-    const int wp = weapons::wp_of_enum(enum_value);
-    for (int s : SUB_WEAPONS) if (s == wp) return true;
-    return false;
+    return weapons::is_sub(weapons::wp_of_enum(enum_value));   // RE3 adds 4520 (Hot Dogger?) to RE2's four
 }
 
 int pre_enable(int argc, void** argv, REFrameworkTypeDefinitionHandle*, unsigned long long) {

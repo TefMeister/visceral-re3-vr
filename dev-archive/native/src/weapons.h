@@ -11,6 +11,7 @@ int wp_of_enum(int enum_value);    // game WeaponType value -> WP number, -1 if 
 int enum_of_wp(int wp);            // WP number -> game WeaponType value, -1 if unknown
 const char* name(int wp);          // display name, "unknown" if not in the table
 Holster holster_for(int wp);       // NONE = not sorted yet (logged so the next build can sort it)
+bool is_sub(int wp);               // knife or grenade (the table's SUB holster): one list instead of six (2026-10-15)
 const char* holster_name(Holster h);
 
 } // namespace vn::weapons
