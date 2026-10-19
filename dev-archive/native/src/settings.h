@@ -122,6 +122,7 @@ constexpr int   MENU_CAM_SETTLE_FRAMES  = 3;  // b102: released only once FirstP
 // ---- RT fires without RG (2026-10-08, detour step 2; the three switches found flat 2026-10-07) -----------------
 constexpr int   FIRE_WINDOW_FRAMES = 20;      // the gun's "may fire" answer stays YES at most this long after the press
 constexpr int   FIRE_LOG_FIRST     = 30;
+constexpr bool  FIRE_EMPTY_SILENT  = true;    // RE2 b174 (moved over 2026-10-19): an empty gun (0 rounds, magazine out, rack needed) gets NO Fire trigger on RT (fire.cpp)
 // automatics fire while RT is held (WP numbers): MQ 11, LE 5, flamethrower, the miniguns. Everything else: one per pull
 constexpr int   FIRE_AUTOMATIC_WP[] = {2000, 2100, 2200, 4200, 4700, 8700, 4520, 4900};   // RE3: 2000 CQBR + 2100 the second rifle [hypothesis] (2026-10-15)      // log the first shots in full (press + bullets before/after + doorbells)
 
@@ -155,7 +156,11 @@ constexpr float RACK_BUZZ_AMP = 0.7f, RACK_BUZZ_SEC = 0.06f;
 // 2026-10-11 (Tefa): the release racks and pumps on the BUTTON, Arcade Controls style: LG held + LT pressed runs the
 // whole cycle by itself, no hand near the gun, no pull. "the gameplay has to have fluid controls in combat". false =
 // the b143 motion racking (hand docks on the slide, the left controller pulls it), kept for tinkering after release.
-constexpr bool  RACK_ON_BUTTON = true;
+constexpr bool  RACK_ON_BUTTON = false;   // 2026-10-19 (Tefa: "re3 to switch to hand racking as well please"): RE2's b165/b166 hand racking
+constexpr float RACK_RETURN_M = 0.03f;        // RE2 b162: forward this far from the furthest-back point = home and chambered
+constexpr float PUMP_ZONE_AHEAD_MIN_M = 0.10f, PUMP_ZONE_AHEAD_MAX_M = 0.70f;   // RE2 b162: the pump docks with the left controller this far ahead of the gun hand
+constexpr float PUMP_ZONE_OFF_AXIS_M = 0.15f;  // ... and within this of the gun's line (the right controller's forward)
+constexpr bool  NO_FIRE_WHILE_LG_LT = true;   // RE2 b165 (Tefa): no gun fires while LG and LT are both held
 constexpr float RACK_BUTTON_PULL_SEC = 0.12f;    // the slide / fore-end travels back in this long
 constexpr float RACK_BUTTON_RETURN_SEC = 0.10f;  // and forward again in this long
 constexpr bool  PUMP_NATIVE_ON = true;        // cut the game's own pump animation, hold the shell eject for our pull
