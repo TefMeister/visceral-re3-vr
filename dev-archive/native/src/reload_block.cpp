@@ -130,11 +130,12 @@ void post_hud_rounds(void** ret_val, REFrameworkTypeDefinitionHandle, unsigned l
 }
 int pre_nop(int, void**, REFrameworkTypeDefinitionHandle*, unsigned long long) { return REFRAMEWORK_HOOK_CALL_ORIGINAL; }
 
-void hook(const char* type, const char* method, REFPreHookFn pre, REFPostHookFn post, const char* what) {
+bool hook(const char* type, const char* method, REFPreHookFn pre, REFPostHookFn post, const char* what) {
     auto* m = API::get()->tdb()->find_method(type, method);
-    if (m == nullptr) { LOGW("%s block: %s.%s not found (%s)", TAG, type, method, what); return; }
+    if (m == nullptr) { LOGW("%s block: %s.%s not found (%s)", TAG, type, method, what); return false; }
     m->add_hook(pre, post, false);
     LOGI("%s block: hook in: %s.%s (%s)", TAG, type, method, what);
+    return true;
 }
 
 void clear_bit(char* bb, uint64_t kind) {
@@ -166,7 +167,11 @@ void install() {
     hook(EQ, "requestFire", pre_fire, post_nop, "no shot with the magazine out");
     hook(EQ, "requestFire", pre_fire_count, post_fire_count, "dry-fire click on an empty gun");
     hook("offline.gamemastering.InventoryManager", "getMainWeaponRemainingBullet", pre_nop, post_hud_rounds, "HUD reads 0 with the magazine out");
-    hook("offline.gui.RemainingBulletBehavior", "get_RequestDraw", pre_hud_request, post_hud_request, "the ammo counter shown after a reload (Tefa: 5 s)");
+    // 2026-10-19: RE3 names RE2's RemainingBulletBehavior "EsRemainingBulletBehavior" (re3.exe holds only that name,
+    // and the 2026-10-10 flat run logged the RE2 name as not found) [inferred-static]; the namespace is a guess, so try both
+    if (!hook("offline.gui.RemainingBulletBehavior", "get_RequestDraw", pre_hud_request, post_hud_request, "the ammo counter shown after a reload (Tefa: 5 s)") &&
+        !hook("offline.gui.EsRemainingBulletBehavior", "get_RequestDraw", pre_hud_request, post_hud_request, "the ammo counter shown after a reload (RE3 name)"))
+        hook("offline.EsRemainingBulletBehavior", "get_RequestDraw", pre_hud_request, post_hud_request, "the ammo counter shown after a reload (RE3 name, no gui namespace)");
     // b141: the get_IsReload spoof is OUT. Worn 2026-10-10 (b140): guns shot with sound but no flash and no counter, and a
     // shotgun sat in the game's shell-loading hand pose forever -- the game's own reload state had started and, told it
     // was not reloading while its inner steps were skipped, never left it [hypothesis]. The orderer inhibit alone is what
