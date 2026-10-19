@@ -9,6 +9,7 @@
 // back, port map §D); the gun's axis = the right controller's forward.
 #include "rack.h"
 #include "bridge.h"
+#include "ghosthand.h"
 #include "common.h"
 #include "joints.h"
 #include "menu_body.h"
@@ -152,9 +153,11 @@ void complete() {
 
 void hand_off(const char* why) {
     g_hand_on = false;
+    const bool armed = g_armed;
     g_armed = false;
     g_socket.active = 0;
-    if (g_pulled) { g_pulled = false; g_travel = 0.0f; complete(); LOGI("%s rack: hand off while pulled: released (%s)", TAG, why); }
+    if (g_pulled) { g_pulled = false; g_travel = 0.0f; complete(); ghosthand::event("rack", "done"); LOGI("%s rack: hand off while pulled: released (%s)", TAG, why); }
+    else if (armed) { ghosthand::value("rack_max_pull_m", g_max_pull); ghosthand::event("rack", g_max_pull > 0.01f ? "fail" : "cancel"); LOGI("%s rack: hand off the %s (%s), furthest pull %.3f m", TAG, is_pump(g_wp) ? "fore-end" : "slide", why, g_max_pull); }
     else LOGI("%s rack: hand off the %s (%s)", TAG, is_pump(g_wp) ? "fore-end" : "slide", why);
 }
 } // namespace
@@ -166,6 +169,9 @@ bool blocks_fire() {
 }
 bool active() { return g_hand_on; }
 int wp_now() { return g_wp; }
+float travel() { return g_travel; }
+float pull_m() { return g_hand_on ? g_pull_m : 0.0f; }
+void* slide_joint() { return g_joint; }
 
 void need(const char* why) {
     if (g_w == nullptr) return;
@@ -252,6 +258,8 @@ void frame() {
                 g_pulled = false;
                 g_armed = false;
                 bridge::rumble(bridge::LEFT, cfg::RACK_BUZZ_AMP * 0.5f, cfg::RACK_BUZZ_SEC);
+            } else if (pump) {
+                ghosthand::value("dock_miss_m", d);   // pressed too far from the fore-end: the hand never docked
             }
         }
     }
@@ -261,6 +269,7 @@ void frame() {
             g_armed = true;
             g_base = along_gun();
             g_pull_m = g_max_pull = 0.0f;
+            ghosthand::event("rack", "start");
         }
         if (menu) hand_off("menu");
         else if (pump && g_pulled && !lt && g_auto != 2) {   // down and LT let go: the handle goes back up by itself
@@ -271,7 +280,11 @@ void frame() {
         else if (pump && !g_pulled && !lt) hand_off("LT let go before the handle was down");
         else if (pump && !lg) hand_off("LG let go");
         else if (!pump && !lg) hand_off(g_pulled ? "LG let go: the slide jumps forward" : "LG let go");
-        else if (!pump && !g_pulled && g_armed && !lt) g_armed = false;   // let go before the back: it springs back, the hand stays
+        else if (!pump && !g_pulled && g_armed && !lt) {   // let go before the back: it springs back, the hand stays
+            g_armed = false;
+            ghosthand::value("rack_max_pull_m", g_max_pull);
+            ghosthand::event("rack", g_max_pull > 0.01f ? "fail" : "cancel");
+        }
     }
 
     // the pull: the left controller moving back along the gun, relative to the right one
