@@ -25,4 +25,7 @@ void slide_lock_empty();           // the last round went: the slide locks open 
 bool blocks_fire();                // a rack/pump is required and has not happened
 bool active();                     // the hand is on the slide / fore-end right now (the dock must leave the left hand alone)
 int  wp_now();
+float travel();           // Ghost Hand (RE2 2026-10-13): the slide's travel 0..1
+float pull_m();           // how far back the hand has pulled since the dock (metres along the gun)
+void* slide_joint();      // this frame's slide / fore-end joint (or nullptr)
 } // namespace vn::rack

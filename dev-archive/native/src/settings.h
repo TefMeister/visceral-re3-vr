@@ -160,6 +160,7 @@ constexpr bool  RACK_ON_BUTTON = false;   // 2026-10-19 (Tefa: "re3 to switch to
 constexpr float RACK_RETURN_M = 0.03f;        // RE2 b162: forward this far from the furthest-back point = home and chambered
 constexpr float PUMP_ZONE_AHEAD_MIN_M = 0.10f, PUMP_ZONE_AHEAD_MAX_M = 0.70f;   // RE2 b162: the pump docks with the left controller this far ahead of the gun hand
 constexpr float PUMP_ZONE_OFF_AXIS_M = 0.15f;  // ... and within this of the gun's line (the right controller's forward)
+constexpr bool  GHOST_HAND_ON = true;     // RE2 b161, moved over 2026-10-19: record the hands for Ghost Hand BeG0nE (ghosthand.h) while the headset is live
 constexpr bool  NO_FIRE_WHILE_LG_LT = true;   // RE2 b165 (Tefa): no gun fires while LG and LT are both held
 constexpr float RACK_BUTTON_PULL_SEC = 0.12f;    // the slide / fore-end travels back in this long
 constexpr float RACK_BUTTON_RETURN_SEC = 0.10f;  // and forward again in this long
