@@ -1,7 +1,7 @@
 # Credits
 
 Every source this research folder draws on, credited by name. If you should be credited here and are
-not, or want something corrected or removed, email us and we will fix it as soon as we can. We honour
+not, or want something corrected or removed, open an issue on GitHub and we will fix it as soon as we can. We honour
 requests from rights holders.
 
 ## The game itself
