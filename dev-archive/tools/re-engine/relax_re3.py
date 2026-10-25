@@ -13,7 +13,7 @@ RE3 differences, measured 2026-10-10:
   - look-at profiles are shared: natives/stm/escape/userdata/character/survivor/common/lookat/
 
 The motlist code (motlist_splice.py, motlist_relax.py, pak_pull.py) is copied unchanged from visceral-re2-vr
-dev-archive/tools/re-engine at 1c96419.
+dev-archive/tools/re-engine at 1c66598.
 
   py relax_re3.py --game-dir "<RE3>" --names <RE3 file-name list> --out <folder> [--character pl2000 pl0000]
 The file-name list is Ekey's public REE.PAK.Tool Projects/RE3_RT_STM_Release.list (names only, no game data).
