@@ -16,7 +16,7 @@
 -- Slot map must match src/bridge.h.
 
 local TAG = "[visceral-bridge]"
-local N = 56
+local N = 57   -- 2026-10-29: + S_AUTO_EXPOSURE_ON (src/bridge.h, exposure.cpp)
 local S_FRAME, S_HMD = 0, 1
 local S_LGRIP, S_LTRIG, S_RGRIP, S_RTRIG = 2, 3, 4, 5
 local S_LA, S_LB, S_RA, S_RB = 6, 7, 8, 9
@@ -27,6 +27,8 @@ local S_FP_USED, S_HMD_YAW, S_OFFEXT_YAW, S_CAM_YAW, S_RENDER_YAW = 32, 33, 34, 
 local S_LCLICK, S_LSTICK_MAG = 37, 38   -- running stop (src/run.cpp)
 local S_HMD_Q, S_ROT_OFF, S_ORIGIN = 40, 44, 48   -- menu camera (src/menu_body.cpp, 2026-10-08)
 local S_RROT = 52   -- the right controller's turn, room space (src/rack.cpp motion racking, b143)
+local S_AUTO_EXPOSURE_ON = 56   -- 2026-10-29: 1 = the game keeps its own automatic brightness (src/bridge.h, exposure.cpp)
+local exposure = {game_auto = false}   -- never saved: every game starts with the game's automatic brightness OFF
 local SENTINEL = 54321.0
 local NO_VALUE = 999.0
 local RUMBLE_FREQ_HZ = 160.0
@@ -153,6 +155,7 @@ re.on_pre_application_entry("LateUpdateBehavior", function()
     local vr = _G.vrmod
     local fp = _G.firstpersonmod
     w(S_FP_USED, (fp and safe(function() return fp:will_be_used() end) == true) and 1 or 0)
+    w(S_AUTO_EXPOSURE_ON, exposure.game_auto and 1 or 0)
     local rawq = vr and safe(function() return vr:get_transform(0):to_quat() end)
     w(S_HMD_YAW, rawq and safe(function() return fwd_yaw(rawq, -1) end) or NO_VALUE)
     w(S_OFFEXT_YAW, rawq and safe(function() return fwd_yaw(vr:get_rotation_offset() * rawq, -1) end) or NO_VALUE)
@@ -172,6 +175,13 @@ re.on_pre_application_entry("LateUpdateBehavior", function()
 end)
 
 re.on_draw_ui(function()
+    if imgui.tree_node("Visceral: brightness") then
+        -- 2026-10-29: the game's automatic brightness (eye adaptation) is kept off by the plugin; tick to compare with the game's own
+        local changed
+        changed, exposure.game_auto = imgui.checkbox("Let the game adjust the brightness by itself (tick to compare; off = steady light)", exposure.game_auto)
+        if changed then log.info(TAG .. (exposure.game_auto and " automatic brightness: the game's own" or " automatic brightness: OFF (steady)")) end
+        imgui.tree_pop()
+    end
     if imgui.tree_node("Visceral bridge (new)") then
         imgui.text(string.format("frame %d  attached=%s  rumbles fired %d", frame, tostring(attached), rumbles))
         if arr then
