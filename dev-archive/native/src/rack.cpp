@@ -74,12 +74,12 @@ void resolve_frame() {
 }
 
 // "near?" only: the left wrist joint stands in for the controller (never used for the pull itself)
-bool hand_near_joint(float& d) {
+bool hand_near_joint(float& d, float reach = cfg::RACK_HAND_M) {
     Vec3 jp, hp;
     auto* wrist = joint_by_name(call_ptr(player_go(), "get_Transform"), L"l_arm_wrist");
     if (!get_v3(JOINT, g_joint, "get_Position", jp) || !get_v3(JOINT, wrist, "get_Position", hp)) return false;
     d = dist(jp, hp);
-    return d <= cfg::RACK_HAND_M;
+    return d <= reach;
 }
 
 // the slide's travel in the gun's frame: his offsets from the real rest; parked a little further back (Tefa)
@@ -137,7 +137,8 @@ bool hand_on_barrel(float& d) {
 
 void complete() {
     const bool pump = is_pump(g_wp);
-    if (g_gun != nullptr) {
+    // 2026-10-31 (RE8's rule): a slide racked with none due is cosmetic: the game's reload-end calls are left out
+    if (g_gun != nullptr && (pump || g_needed || g_parked)) {
         reload_block::Commit c;
         call_direct<void*>(g_gun, "executeEndReload", nullptr);
         if (pump) call_direct<void*>(g_gun, "executeEndEject", nullptr);
@@ -244,15 +245,18 @@ void frame() {
     //           slide; LT (with the hand on) = the pull is live, held until the slide is all the way back; once back,
     //           LT does nothing and letting LG go makes it jump forward. LT let go before the back = it springs back.
     const bool pump = is_pump(g_wp);
-    const bool may_rack = pump || g_parked || g_needed;
+    // 2026-10-31 (RE8, Tefa: "hand on the slide and be able to rack it whenever"): a slide any time, then only on a fresh LG
+    // press right at the slide, so a two-handed grip is never taken
+    const bool any_time = cfg::RACK_SLIDE_ANY_TIME && !pump && !g_parked && !g_needed;
+    const bool may_rack = pump || g_parked || g_needed || any_time;
     const float now = now_s();
     if (!lt) g_spent = false;
     if (!g_hand_on && !menu && !reload::session_active() && may_rack && !g_spent) {
         float d = 0.0f;
-        const bool want = pump ? (lg && bridge::pressed(bridge::S_LTRIG)) : lg;
+        const bool want = pump ? (lg && bridge::pressed(bridge::S_LTRIG)) : any_time ? bridge::pressed(bridge::S_LGRIP) : lg;
         if (want) {
-            const bool near = pump ? hand_on_barrel(d) : hand_near_joint(d);
-            if ((pump || bridge::pressed(bridge::S_LGRIP)) && g_log_near < 30) { ++g_log_near; LOGI("%s rack: %s, left hand %.3f m from the %s (need %.2f): %s", TAG, pump ? "LG+LT" : "LG", d, pump ? "fore-end line" : "slide", pump ? cfg::PUMP_ZONE_OFF_AXIS_M : cfg::RACK_HAND_M, near ? "HAND ON" : "too far"); }
+            const bool near = pump ? hand_on_barrel(d) : hand_near_joint(d, any_time ? cfg::RACK_ANYTIME_HAND_M : cfg::RACK_HAND_M);
+            if ((pump || bridge::pressed(bridge::S_LGRIP)) && g_log_near < 30) { ++g_log_near; LOGI("%s rack: %s, left hand %.3f m from the %s (need %.2f): %s", TAG, pump ? "LG+LT" : "LG", d, pump ? "fore-end line" : "slide", pump ? cfg::PUMP_ZONE_OFF_AXIS_M : any_time ? cfg::RACK_ANYTIME_HAND_M : cfg::RACK_HAND_M, near ? (any_time ? "HAND ON (no rack due: cosmetic)" : "HAND ON") : "too far"); }
             if (near) {
                 g_hand_on = true;
                 g_pulled = false;

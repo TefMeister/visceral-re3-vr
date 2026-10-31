@@ -136,7 +136,7 @@ void frame() {
         // RE2 b174 (Tefa 2026-10-16: "gun just clicks like it should!"): an EMPTY gun gets no Fire trigger. The Fire
         // trigger without the gun's YES makes the FSM play the real shoot clip with its gunshot sound, and the in-flight
         // branch below re-raised the order every frame until a shot ran, which on an empty gun is never.
-        const bool mag_out = reload::mag_out(), rack_needed = rack::blocks_fire(), ours = reload::managed_now();
+        const bool mag_out = reload::fire_blocked(), rack_needed = rack::blocks_fire(), ours = reload::managed_now();   // 2026-10-31: a chambered round fires with the magazine out
         g_empty = cfg::FIRE_EMPTY_SILENT && (mag_out || rack_needed || g_bullets_before == 0);
         if (g_empty) {
             set_precede(p.orderer, !ours);   // our guns: no order either (b142); the game's own guns keep it, so the game does its own empty-gun thing
