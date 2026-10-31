@@ -72,14 +72,14 @@ end
 install()
 
 -- NUM7 (2026-09-30, the swing test): flip the hold off/on in the headset without opening the panel
-local VK_NUMPAD7 = 0x67
+local VK_NUMPAD7 = 0x64   -- 2026-10-31: NUM4 now (the variable keeps its old name): NUM7 is the plugin's light switch (exposure.cpp), as in RE2
 local key7_prev = false
 
 re.on_frame(function()
     local k7 = reframework:is_key_down(VK_NUMPAD7)
     if k7 and not key7_prev then
         cfg.enabled = not cfg.enabled
-        log_line("NUM7: left-hand hold " .. (cfg.enabled and "ON" or "OFF"))
+        log_line("NUM4: left-hand hold " .. (cfg.enabled and "ON" or "OFF"))
     end
     key7_prev = k7
     local now = os.clock()
