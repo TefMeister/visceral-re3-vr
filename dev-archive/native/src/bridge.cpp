@@ -55,6 +55,7 @@ void frame_begin() {
 }
 
 bool held(Slot s) { return g_now[s] > 0.5f; }
+void put(Slot s, float v) { if (live()) elems()[s] = v; }
 bool pressed(Slot s) { return g_now[s] > 0.5f && g_prev[s] <= 0.5f; }
 
 void rumble(Hand h, float amplitude, float seconds) {

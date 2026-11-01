@@ -15,5 +15,7 @@ if [ "${1:-}" = "--deploy" ]; then
     mkdir -p "$GAME/reframework/plugins" "$GAME/reframework/autorun"
     cp "$DLL" "$GAME/reframework/plugins/visceral_native.dll"
     cp "$HERE/lua/visceral_bridge.lua" "$GAME/reframework/autorun/visceral_bridge.lua"
+    mkdir -p "$GAME/reframework/data/custom_sfx/common"
+    cp "$HERE/sfx/dry_hammer.wav" "$GAME/reframework/data/custom_sfx/common/dry_hammer.wav"   # the empty click (2026-11-01)
     cmp "$DLL" "$GAME/reframework/plugins/visceral_native.dll" && cmp "$HERE/lua/visceral_bridge.lua" "$GAME/reframework/autorun/visceral_bridge.lua" && echo "deployed OK"
 fi

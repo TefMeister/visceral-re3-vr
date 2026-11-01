@@ -128,6 +128,14 @@ constexpr int   FIRE_AUTOMATIC_WP[] = {2000, 2100, 2200, 4200, 4700, 8700, 4520,
 
 // ---- manual magazine reload, bundle 1 of the RELOADED port (2026-10-10; reload.h, reload_block.h, sfx.h) ----------
 // Times and distances are Andyalpa's (re2_vr_reload.json `anim`, `mag_holster`); per-weapon numbers in reload_data.h.
+// 2026-11-01 (Village port): the empty click is a short hammer cock (sfx/dry_hammer.wav -> custom_sfx/common)
+constexpr const char* DRY_CLICK_KIND = "dry_hammer";
+constexpr const char* DRY_CLICK_FOLDER = "common";
+constexpr float DRY_CLICK_VOL = 1.0f;
+constexpr const char* DRY_CLICK_OFF_FILE = "reframework/data/visceral_dry_click_off";   // test switch: present = ours muted
+// 2026-11-01 (Village port: Hand Poser poses a hand only while it is on the gun): the left hand counts as on the gun while one
+// of our sockets holds it, or LG is held with a gun out this close to the gun hand [hypothesis: a first guess]
+constexpr float LEFT_ON_GUN_NEAR_M = 0.45f;
 constexpr bool  RELOAD_ON = true;                 // false = the game's own reload everywhere, nothing of ours runs
 constexpr float RELOAD_SLIDE_SEC = 0.19f;         // the magazine slides out of the magwell
 constexpr float RELOAD_FALL_SEC = 0.5f;           // then falls

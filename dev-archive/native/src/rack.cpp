@@ -20,6 +20,8 @@
 #include "settings.h"
 #include "sfx.h"
 #include "weapons.h"
+#include <cmath>
+#include <map>
 
 namespace vn::rack {
 
@@ -187,14 +189,38 @@ void slide_lock_empty() {
     g_parked = true;
 }
 
+// 2026-11-01 (Village port): each gun's pending rack and locked-back slide are kept when it is put away, given back on return
+struct Kept { bool needed, parked; };
+std::map<int, Kept> g_kept;
+
+void publish_hands() {   // 2026-11-01: for Hand Poser (the gun in hand, the left hand on it); last frame's socket is fine
+    const int wp = weapons::current_id();
+    bool on = g_socket.active != 0;
+    if (!on && wp >= 0 && bridge::live() && bridge::held(bridge::S_LGRIP)) {
+        const Vec3 d = bridge::hand_pos(bridge::LEFT) - bridge::hand_pos(bridge::RIGHT);
+        on = std::sqrt(d.x * d.x + d.y * d.y + d.z * d.z) < cfg::LEFT_ON_GUN_NEAR_M;
+    }
+    bridge::put(bridge::S_WHO, static_cast<float>(wp));
+    bridge::put(bridge::S_LEFT_ON_GUN, on ? 1.0f : 0.0f);
+}
+
 void frame() {
+    publish_hands();
     if (!cfg::RELOAD_ON) return;
     const int wp = weapons::current_id();
     if (wp != g_wp) {
-        if (g_needed) LOGI("%s rack: WP%04d put away with a rack pending -- forgotten (the game's own state rules)", TAG, g_wp);
+        if (g_w != nullptr && g_wp >= 0) {
+            g_kept[g_wp] = Kept{g_needed, g_parked};
+            if (g_needed || g_parked) LOGI("%s rack: WP%04d put away with a rack pending: kept for when it comes back", TAG, g_wp);
+        }
         g_wp = wp;
         g_w = slide_weapon(wp);
         g_needed = g_parked = g_hand_on = g_pulled = false;
+        if (auto it = g_kept.find(wp); g_w != nullptr && it != g_kept.end()) {
+            g_needed = it->second.needed; g_parked = it->second.parked;
+            g_kept.erase(it);
+            if (g_needed || g_parked) LOGI("%s rack: WP%04d back with its rack still pending (needed %d, slide back %d)", TAG, wp, g_needed, g_parked);
+        }
         g_auto = 0;
         g_travel = 0.0f;
         g_have_rest = false;

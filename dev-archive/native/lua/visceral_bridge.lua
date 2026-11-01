@@ -16,7 +16,7 @@
 -- Slot map must match src/bridge.h.
 
 local TAG = "[visceral-bridge]"
-local N = 57   -- 2026-10-29: + S_AUTO_EXPOSURE_ON (src/bridge.h, exposure.cpp)
+local N = 59   -- 2026-11-01: + S_WHO 57, S_LEFT_ON_GUN 58 (written by the plugin, read by Hand Poser); before: 57   -- 2026-10-29: + S_AUTO_EXPOSURE_ON (src/bridge.h, exposure.cpp)
 local S_FRAME, S_HMD = 0, 1
 local S_LGRIP, S_LTRIG, S_RGRIP, S_RTRIG = 2, 3, 4, 5
 local S_LA, S_LB, S_RA, S_RB = 6, 7, 8, 9
@@ -190,3 +190,9 @@ re.on_draw_ui(function()
         imgui.tree_pop()
     end
 end)
+
+-- 2026-11-01: the slots for other scripts (Hand Poser reads the gun in hand at 57 and the left hand on the gun at 58)
+_G.visceral_bridge = {
+    ready = function() return arr ~= nil end,
+    r = function(slot) return arr and r(slot) or nil end,
+}

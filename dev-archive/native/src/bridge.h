@@ -30,6 +30,9 @@ enum Slot : int {
     S_RROT = 52,          // the right controller's turn in room space, quaternion x y z w (b143, motion racking)
     S_AUTO_EXPOSURE_ON = 56, // 2026-10-29: 1 = the game keeps its own automatic brightness (Lua tick box); 0 or unset = ours keeps it off (exposure.cpp)
     S_COUNT = 57,
+    // 2026-11-01, WRITTEN BY THE PLUGIN (after S_COUNT: not in the button snapshot), read by Hand Poser
+    S_WHO = 57,           // the gun in hand (WP number, -1 none)
+    S_LEFT_ON_GUN = 58,   // 1 = the left hand is on the gun
 };
 constexpr float SENTINEL = 54321.0f;
 constexpr float NO_VALUE = 999.0f;
@@ -45,6 +48,7 @@ void rumble(Hand h, float amplitude, float seconds);
 Vec3 hmd_pos();
 Quat hmd_rot();
 Vec3 hand_pos(Hand h);
+void put(Slot s, float v);         // 2026-11-01: write a slot the Lua reads (S_WHO, S_LEFT_ON_GUN)
 float view(Slot s);                // read a view slot NOW (not the frame-start snapshot); NO_VALUE if not live
 Quat view_quat(Slot s);            // four slots read NOW; check has(.x) before use
 Vec3 view_vec3(Slot s);            // three slots read NOW; check has(.x) before use
