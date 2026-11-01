@@ -136,6 +136,7 @@ constexpr const char* DRY_CLICK_OFF_FILE = "reframework/data/visceral_dry_click_
 // 2026-11-01 (Village port: Hand Poser poses a hand only while it is on the gun): the left hand counts as on the gun while one
 // of our sockets holds it, or LG is held with a gun out this close to the gun hand [hypothesis: a first guess]
 constexpr float LEFT_ON_GUN_NEAR_M = 0.45f;
+constexpr bool  MAG_KEEP_OUT_ON_SWAP = true;   // 2026-11-01: a magazine taken out stays out when the gun is put away and comes back (Tefa)
 constexpr bool  RELOAD_ON = true;                 // false = the game's own reload everywhere, nothing of ours runs
 constexpr float RELOAD_SLIDE_SEC = 0.19f;         // the magazine slides out of the magwell
 constexpr float RELOAD_FALL_SEC = 0.5f;           // then falls
