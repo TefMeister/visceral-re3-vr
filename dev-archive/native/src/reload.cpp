@@ -5,6 +5,7 @@
 // to the weapon transform for a joint). World positions are never read back from a joint we wrote the same frame
 // (the stale-world-matrix trap, port map §D): the slide's end point is computed from the weapon transform instead.
 #include "reload.h"
+#include "shellclip.h"
 #include "bridge.h"
 #include "ghosthand.h"
 #include "menu_body.h"
@@ -79,6 +80,13 @@ float g_closest = 99.0f;          // the nearest the magazine in the hand came t
 const ShellWeapon* g_sw = nullptr;
 MO* g_shell_joint = nullptr;
 bool g_shell_in_hand = false;
+// 2026-11-02 (Tefa, Village then RE2 first): two shells per pouch grab; at the port the hand docks (rack.cpp hands the dock to
+// the VR layer through its socket); LT puts them in one by one, each with the game's finger movement (shellclip.cpp)
+int g_shells_n = 0;
+bool g_shell_docked = false, g_seq_on = false;
+float g_seq_next = 0.0f;
+Vec3 g_dock_p{};
+Quat g_dock_q{0, 0, 0, 1};
 bool g_shell_have_rest = false;
 Vec3 g_shell_rest{};
 Quat g_shell_rest_rot{0, 0, 0, 1};
@@ -158,6 +166,8 @@ void shell_pose_joint() {
 void shell_put_back(const char* why) {
     if (!g_shell_in_hand) return;
     g_shell_in_hand = false;
+    g_shell_docked = g_seq_on = false;
+    g_shells_n = 0;
     shell_part(false);
     if (g_shell_joint != nullptr && g_shell_have_rest) write_shell_local(g_shell_rest, g_shell_rest_rot);
     LOGI("%s reload: shell put back (%s)", TAG, why);
@@ -198,6 +208,40 @@ void shell_checks() {
     if (!to_weapon_local(wp, wr, lp, nullptr)) return;
     const float d = dist(lp, g_sw->port);
     const float now = now_s();
+    static float s_told = 0.0f;   // how far the shells are, twice a second, so a test (or a log read) can find the port
+    if (now - s_told > 0.5f) { s_told = now; LOGI("%s reload: the round %.3f m from the port", TAG, d); }
+    if (!g_shell_docked) {
+        if (d > cfg::SHELL_PORT_DOCK_M) return;
+        auto* rwrist = joint_by_name(call_ptr(player_go(), "get_Transform"), L"r_arm_wrist");
+        Vec3 lw, rw;
+        Quat lq, rq;
+        if (g_wrist == nullptr || rwrist == nullptr || !get_v3(JOINT, g_wrist, "get_Position", lw) || !get_q(JOINT, g_wrist, "get_Rotation", lq) ||
+            !get_v3(JOINT, rwrist, "get_Position", rw) || !get_q(JOINT, rwrist, "get_Rotation", rq)) return;
+        const Quat inv = qinv(qnorm(rq));
+        g_dock_p = rotate(inv, lw - rw);
+        g_dock_q = qnorm(qmul(inv, qnorm(lq)));
+        g_shell_docked = true;
+        bridge::rumble(bridge::LEFT, cfg::RELOAD_GRAB_BUZZ_AMP, cfg::RELOAD_GRAB_BUZZ_SEC);
+        LOGI("%s reload: %d shell(s) at the port (%.3f m): the hand docks; LT puts them in", TAG, g_shells_n, d);
+        return;
+    }
+    if (!g_seq_on && bridge::pressed(bridge::S_LTRIG)) { g_seq_on = true; g_seq_next = now; LOGI("%s reload: LT at the port: %d shell(s) go in", TAG, g_shells_n); }
+    if (!g_seq_on || now < g_seq_next) return;
+    if (g_shells_n > 0 && tube_space() > 0) {
+        sfx::play("mag_insert", g_sw->sfx, g_sw->vol);
+        bridge::rumble(bridge::LEFT, cfg::RELOAD_INSERT_BUZZ_AMP, cfg::RELOAD_INSERT_BUZZ_SEC);
+        shell_insert();
+        shellclip::play(g_wp);
+        --g_shells_n;
+        g_seq_next = now + cfg::SHELLS_STEP_S;
+        if (g_shells_n > 0 && tube_space() > 0) return;
+    }
+    LOGI("%s reload: shells done: loaded %d, %d left in the hand go back to the pouch", TAG, loaded(), g_shells_n);
+    g_shell_in_hand = g_shell_docked = g_seq_on = false;
+    g_shells_n = 0;
+    shell_part(false);
+    if (g_shell_joint != nullptr && g_shell_have_rest) write_shell_local(g_shell_rest, g_shell_rest_rot);
+    return;
     if (d > g_sw->dock || now - g_shell_last_dock < cfg::RELOAD_DOCK_COOLDOWN_SEC) return;
     g_shell_last_dock = now;
     LOGI("%s reload: shell at the port (%.3f m, need %.3f)", TAG, d, g_sw->dock);
@@ -506,6 +550,7 @@ bool mag_out() { return managed_now() && g_w != nullptr && g_st != St::SEATED; }
 bool fire_blocked() { return mag_out() && g_chamber <= 0; }
 int hud_rounds() { return mag_out() ? g_chamber : -1; }
 bool session_active() { return mag_out() || g_shell_in_hand; }
+bool shell_socket(Vec3& p, Quat& q) { if (!managed_now() || !g_shell_docked) return false; p = g_dock_p; q = g_dock_q; return true; }   // 2026-11-02
 int wp_now() { return g_wp; }
 const char* sfx_folder_now() { return g_w ? g_w->sfx : g_sw ? g_sw->sfx : "handgun"; }
 float sfx_volume_now() { return g_w ? g_w->vol : g_sw ? g_sw->vol : 1.0f; }
@@ -594,10 +639,11 @@ bool pouch_grab() {
         }
         if (g_shell_joint == nullptr) { LOGW("%s reload: shell joint %s not found on WP%04d", TAG, g_sw->joint, g_wp); return true; }
         g_shell_in_hand = true;
+        g_shells_n = std::min(cfg::SHELLS_PER_GRAB, std::min(reserve(), tube_space()));   // 2026-11-02: two
         shell_part(true);
         sfx::play("mag_grab", g_sw->sfx, g_sw->vol);
         bridge::rumble(bridge::LEFT, cfg::RELOAD_GRAB_BUZZ_AMP, cfg::RELOAD_GRAB_BUZZ_SEC);
-        LOGI("%s reload: shell in the left hand (carried %d, space %d)", TAG, reserve(), tube_space());
+        LOGI("%s reload: %d shell(s) in the left hand (carried %d, space %d)", TAG, g_shells_n, reserve(), tube_space());
         return true;
     }
     if (g_st != St::OUT) return false;

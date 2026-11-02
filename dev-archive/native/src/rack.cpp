@@ -104,6 +104,14 @@ void write_joint() {
 // the socket for the VR layer: where the slide is now, relative to the right wrist
 void publish_socket() {
     g_socket.active = 0;
+    Vec3 sp;
+    Quat sq;
+    if (reload::shell_socket(sp, sq)) {   // 2026-11-02: shells docked at the port: the hand sits there
+        g_socket.px = sp.x; g_socket.py = sp.y; g_socket.pz = sp.z;
+        g_socket.qx = sq.x; g_socket.qy = sq.y; g_socket.qz = sq.z; g_socket.qw = sq.w;
+        g_socket.active = 1;
+        return;
+    }
     if (!g_hand_on || g_joint == nullptr || g_rwrist == nullptr) return;
     Vec3 jp, rp;
     Quat jq, rq;

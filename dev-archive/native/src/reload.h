@@ -27,6 +27,7 @@ bool mag_out();          // the magazine is not seated
 bool fire_blocked();     // the magazine is out and no round is left in the chamber: the gun must not fire (2026-10-31)
 int  hud_rounds();       // what the ammo counter shows while the magazine is out (0 or the chambered 1); -1 = seated
 bool session_active();   // a reload is under way (the left grip must not ready the sub weapon)
+bool shell_socket(Vec3& p, Quat& q);   // 2026-11-02: the left hand docked at the shell port: its wrist in right-wrist space (rack.cpp)
 int  wp_now();           // the gun in hand (WP number), -1 if none
 const char* sfx_folder_now();
 float sfx_volume_now();

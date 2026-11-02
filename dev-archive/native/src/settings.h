@@ -205,4 +205,9 @@ constexpr float THROW_SWING_MPS = 1.6f;      // OURS: the right controller must 
 constexpr float THROW_SWING_SMOOTH = 0.35f;  // speed smoothing per frame (1 = raw)
 constexpr int   THROW_HOLD_FRAMES = 12;      // the grenade throw = HOLD sent this many frames on the swing (b137)
 
+// 2026-11-02: pump shotguns take two shells per pouch grab, dock at the port, LT puts them in (reload.cpp, shellclip.cpp)
+constexpr int   SHELLS_PER_GRAB = 2;
+constexpr float SHELLS_STEP_S = 0.4f;        // one shell after another: the finger movement (0.33 s) and a breath
+constexpr float SHELL_PORT_DOCK_M = 0.12f;   // the shells this close to the port: the hand docks there (simulator: RE3 reached 0.113 at best, RE2 0.096)
+
 } // namespace vn::cfg
