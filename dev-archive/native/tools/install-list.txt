@@ -4,8 +4,11 @@
 #   a source that is a folder is copied whole
 # Everything of OURS in the game folder that is not on the list for the chosen layer is moved out by --deploy.
 
-# ---- layer 1: the loader (RE3's own patched REFramework 76298bd, bafff0dd: socket v1; design D3) --------------------
-1 backup:dinput8.dll                                         dinput8.dll
+# ---- layer 1: the loader ------------------------------------------------------------------------------------------
+# Layer 1b (2026-11-07, design D3): REFramework 76298bd + RE2's cumulative 2026-11-02 patch (dev-archive/reframework-patch in
+# visceral-re2-vr; the D:/ref-76b tree, target RE3), dinput8 d60128e7: socket v2, so the left hand is never docked on the
+# grip while a magazine or shells are in it. It replaced RE3's own bafff0dd (socket v1, saved as builds b004 / b005).
+1 backup:../loaders/dinput8-d60128e7-shared-patch-2026-11-02.dll   dinput8.dll
 1 backup:openxr_loader.dll                                   openxr_loader.dll
 1 backup:ref_ui.ini                                          ref_ui.ini
 1 repo:game-folder/re2_fw_config.txt                         re2_fw_config.txt   # RE3's REFramework keeps RE2's file names
