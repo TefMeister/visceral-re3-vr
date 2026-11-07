@@ -1,0 +1,40 @@
+# What deploy.py puts in the RE3 folder, layer by layer (the clean rebuild, 2026-11-07). PER GAME (not synced from RE2).
+# One line: <layer> [max=N] <source> <game path>      (a # starts a note, also after a line)
+#   source  repo:<path under dev-archive/native/>   or   backup:<path under the backup's game/ folder (tools/game.conf)>
+#   a source that is a folder is copied whole
+# Everything of OURS in the game folder that is not on the list for the chosen layer is moved out by --deploy.
+
+# ---- layer 1: the loader (RE3's own patched REFramework 76298bd, bafff0dd: socket v1; design D3) --------------------
+1 backup:dinput8.dll                                         dinput8.dll
+1 backup:openxr_loader.dll                                   openxr_loader.dll
+1 backup:ref_ui.ini                                          ref_ui.ini
+1 repo:game-folder/re2_fw_config.txt                         re2_fw_config.txt   # RE3's REFramework keeps RE2's file names
+1 repo:game-folder/_interaction_profiles_oculus_touch_controller.json   _interaction_profiles_oculus_touch_controller.json
+1 backup:reframework/autorun/re2_sharpness_removal.lua       reframework/autorun/re2_sharpness_removal.lua
+1 backup:reframework/autorun/re2_smooth_movement.lua         reframework/autorun/re2_smooth_movement.lua
+1 backup:reframework/autorun/re2_vr_crosshair.lua            reframework/autorun/re2_vr_crosshair.lua
+1 backup:reframework/autorun/re2_vr_grenade.lua              reframework/autorun/re2_vr_grenade.lua
+1 backup:reframework/autorun/re2_vr_melee.lua                reframework/autorun/re2_vr_melee.lua
+1 backup:reframework/autorun/re4_vr_crosshair.lua            reframework/autorun/re4_vr_crosshair.lua
+1 backup:reframework/autorun/re8_vr.lua                      reframework/autorun/re8_vr.lua
+1 backup:reframework/autorun/utility                         reframework/autorun/utility
+1 backup:reframework/autorun/vr                              reframework/autorun/vr
+1 backup:reframework/data/re2_vr                             reframework/data/re2_vr
+1 backup:reframework/data/visceral/hand_smooth.json          reframework/data/visceral/hand_smooth.json
+1 repo:lua/visceral_mute_music.lua                           reframework/autorun/visceral_mute_music.lua   # until native
+
+# ---- layer 2: the body (RE3's gen-1 body files, moved unchanged; the Lua that ran in b003) + the shared core ----------
+2 repo:build/Release/visceral_native.dll                    reframework/plugins/visceral_native.dll
+2 repo:lua/visceral_bridge.lua                               reframework/autorun/visceral_bridge.lua
+2 repo:lua/jitterlog.lua                                     reframework/autorun/jitterlog.lua   # was missing in b003 (Lanes PROTOCOL 18)
+2 repo:lua/visceral_body_anchor.lua                          reframework/autorun/visceral_body_anchor.lua
+2 repo:lua/visceral_body_direct.lua                          reframework/autorun/visceral_body_direct.lua
+2 repo:lua/visceral_lefthand_hold.lua                        reframework/autorun/visceral_lefthand_hold.lua
+2 repo:lua/visceral_steady_light.lua                         reframework/autorun/visceral_steady_light.lua
+2 backup:natives                                             natives
+2 backup:reframework/data/custom_sfx                         reframework/data/custom_sfx
+2 backup:reframework/data/visceral_options_set.txt           reframework/data/visceral_options_set.txt
+2 backup:reframework/data/visceral_steady_light.json         reframework/data/visceral_steady_light.json
+
+# ---- layer 3: the guns (the shared src/guns/, RE3's table in src/game/guns_table.cpp) -------------------------------
+# No new files: the gun code is in the plugin. Deploy with --layer 3 so the build is named for it.

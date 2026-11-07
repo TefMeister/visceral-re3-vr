@@ -10,13 +10,16 @@
 -- Written at LateUpdateBehavior PRE so the plugin reads them at LateUpdateBehavior POST of the same frame.
 --
 -- Hand-over: the array is passed once to a "mailbox" method the plugin hooks
--- (offline.RagdollControlZoneManager.set_AccessMutex, a real compiled game function); the plugin
+-- (<ns>RagdollControlZoneManager.set_AccessMutex, a real compiled game function); the plugin
 -- recognises it by its sentinel, keeps it, skips the original, and writes 1 into the ACK slot.
 -- The same idea ran live on 2026-10-03 in the old plugin; this is a fresh, smaller copy.
 -- Slot map must match src/bridge.h.
 
 local TAG = "[visceral-bridge]"
-local N = 59   -- 2026-11-01: + S_WHO 57, S_LEFT_ON_GUN 58 (written by the plugin, read by Hand Poser); before: 57   -- 2026-10-29: + S_AUTO_EXPOSURE_ON (src/bridge.h, exposure.cpp)
+-- 2026-11-07 (the clean rebuild): one file for RE2 and RE3 (shared, RE2's repo owns it); the game decides the type names
+local GAME = reframework:get_game_name()   -- "re2" or "re3"
+local NS = GAME == "re3" and "offline." or "app.ropeway."
+local N = 604   -- 2026-10-31: + the eighth hold at 540 (src/bridge.h S_HT2, the hand on the magazine); b173: 84 + the hand tuning slots (src/bridge.h S_WHO .. S_HT + 7 x 64) + S_FREEZE; b188: + S_LADDER_HOLD_OFF; 2026-10-28: + S_AUTO_EXPOSURE_ON
 local S_FRAME, S_HMD = 0, 1
 local S_LGRIP, S_LTRIG, S_RGRIP, S_RTRIG = 2, 3, 4, 5
 local S_LA, S_LB, S_RA, S_RB = 6, 7, 8, 9
@@ -27,8 +30,7 @@ local S_FP_USED, S_HMD_YAW, S_OFFEXT_YAW, S_CAM_YAW, S_RENDER_YAW = 32, 33, 34, 
 local S_LCLICK, S_LSTICK_MAG = 37, 38   -- running stop (src/run.cpp)
 local S_HMD_Q, S_ROT_OFF, S_ORIGIN = 40, 44, 48   -- menu camera (src/menu_body.cpp, 2026-10-08)
 local S_RROT = 52   -- the right controller's turn, room space (src/rack.cpp motion racking, b143)
-local S_AUTO_EXPOSURE_ON = 56   -- 2026-10-29: 1 = the game keeps its own automatic brightness (src/bridge.h, exposure.cpp)
-local exposure = {game_auto = false}   -- never saved: every game starts with the game's automatic brightness OFF
+-- 56..83: b156-b159 slider slots, unused since b164 (visceral_tuning.lua writes 84 onward)
 local SENTINEL = 54321.0
 local NO_VALUE = 999.0
 local RUMBLE_FREQ_HZ = 160.0
@@ -50,7 +52,7 @@ local function setup()
     for s = S_HMD_YAW, S_RENDER_YAW do w(s, NO_VALUE) end
     w(S_HMD_Q, NO_VALUE); w(S_ROT_OFF, NO_VALUE); w(S_ORIGIN, NO_VALUE)
     w(S_SENTINEL, SENTINEL)
-    local t = sdk.find_type_definition("offline.RagdollControlZoneManager")
+    local t = sdk.find_type_definition(NS .. "RagdollControlZoneManager")
     mailbox = t and t:get_method("set_AccessMutex")
     if not mailbox then log.error(TAG .. " mailbox method not found"); return false end
     log.info(TAG .. " array ready")
@@ -84,10 +86,54 @@ local function poses(vr)
     else w(S_RROT, NO_VALUE); w(S_RROT + 1, 0); w(S_RROT + 2, 0); w(S_RROT + 3, 1) end
 end
 
+-- BeG0nE Camera Jitter ride-along (board row 6g, wired 2026-10-14): the headset pose as read, the camera as rendered and
+-- each picture presented go to %LOCALAPPDATA%\BeG0nE\jitter\visceral-<game>-vr_<time>.jl while the headset is live, so
+-- `begone.py new` can say whether the stepped feel on slow turns is a rate fault (pose read less often than rendered)
+-- or a pose fault. jitterlog.lua sits beside this file; without it nothing is recorded and nothing else changes.
+local jl_ok, jl = pcall(require, "jitterlog")
+if jl_ok and jl then jl.init("visceral-" .. GAME .. "-vr", "openxr") else jl = nil; log.info(TAG .. " jitterlog.lua not found: no jitter recording") end
+local jl_live = false
+-- yaw / pitch / roll in degrees from a quaternion, the bridge's own convention: forward = q * (0,0,-1), up = q * (0,1,0)
+local function ypr(q)
+    local f = q * Vector3f.new(0, 0, -1)
+    local u = q * Vector3f.new(0, 1, 0)
+    local yaw = math.deg(math.atan(f.x, -f.z))
+    local pitch = math.deg(math.asin(math.max(-1, math.min(1, f.y))))
+    local r = q * Vector3f.new(1, 0, 0)
+    local roll = math.deg(math.atan(-r.y, u.y))
+    return yaw, pitch, roll
+end
+local function jl_pose(vr)
+    if not jl then return end
+    local q = safe(function() return vr:get_transform(0):to_quat() end)
+    local p = safe(function() return vr:get_position(0) end)
+    if q and type(q.w) == "number" then
+        local yaw, pitch, roll = ypr(q)
+        jl.pose(yaw, pitch, roll, p and p.x or 0, p and p.y or 0, p and p.z or 0)
+    end
+end
+local function jl_camera()
+    if not jl or not jl.is_on() then return end
+    local m = safe(function() return sdk.get_primary_camera():call("get_WorldMatrix") end)
+    local q = m and safe(function() return m:to_quat() end)
+    if q and type(q.w) == "number" then
+        local yaw, pitch, roll = ypr(q)
+        local p = safe(function() return m[3] end)
+        jl.camera(yaw, pitch, roll, p and p.x or 0, p and p.y or 0, p and p.z or 0)
+    end
+    jl.present()
+end
+
 local function buttons()
     local vr = _G.vrmod
     local live = vr and safe(function() return vr:is_hmd_active() end) == true
     w(S_HMD, live and 1 or 0)
+    if jl and live ~= jl_live then
+        jl_live = live
+        if live then jl.vr_on() else jl.vr_off() end
+        log.info(TAG .. " jitter recording " .. (live and "ON" or "OFF"))
+    end
+    if live then jl_pose(vr) end
     if not live then
         for s = S_LGRIP, S_RB do w(s, 0) end
         w(S_LCLICK, 0); w(S_LSTICK_MAG, 0)
@@ -155,7 +201,6 @@ re.on_pre_application_entry("LateUpdateBehavior", function()
     local vr = _G.vrmod
     local fp = _G.firstpersonmod
     w(S_FP_USED, (fp and safe(function() return fp:will_be_used() end) == true) and 1 or 0)
-    w(S_AUTO_EXPOSURE_ON, exposure.game_auto and 1 or 0)
     local rawq = vr and safe(function() return vr:get_transform(0):to_quat() end)
     w(S_HMD_YAW, rawq and safe(function() return fwd_yaw(rawq, -1) end) or NO_VALUE)
     w(S_OFFEXT_YAW, rawq and safe(function() return fwd_yaw(vr:get_rotation_offset() * rawq, -1) end) or NO_VALUE)
@@ -174,14 +219,18 @@ re.on_pre_application_entry("LateUpdateBehavior", function()
     if origin and type(origin.x) == "number" then w3(S_ORIGIN, origin) else w(S_ORIGIN, NO_VALUE); w(S_ORIGIN + 1, 0); w(S_ORIGIN + 2, 0) end
 end)
 
+-- the camera as the renderer gets it, after the VR layer's own BeginRendering pass, and one "picture presented" mark
+re.on_application_entry("BeginRendering", function() jl_camera() end)   -- REFramework's "post" hook is on_application_entry (2026-10-14: on_post_... is nil and killed the whole script)
+
+-- b156-b159's three slider menus (shell in the hand, hand on the slide, fingers on the slide) became
+-- visceral_tuning.lua on 2026-10-13 (b164): per character, per gun, per hold; Tefa's numbers are built into the plugin.
+_G.visceral_bridge = {
+    ready = function() return arr ~= nil end,
+    r = function(slot) return r(slot) end,
+    w = function(slot, v) w(slot, v) end,
+}
+
 re.on_draw_ui(function()
-    if imgui.tree_node("Visceral: brightness") then
-        -- 2026-10-29: the game's automatic brightness (eye adaptation) is kept off by the plugin; tick to compare with the game's own
-        local changed
-        changed, exposure.game_auto = imgui.checkbox("Let the game adjust the brightness by itself (tick to compare; off = steady light)", exposure.game_auto)
-        if changed then log.info(TAG .. (exposure.game_auto and " automatic brightness: the game's own" or " automatic brightness: OFF (steady)")) end
-        imgui.tree_pop()
-    end
     if imgui.tree_node("Visceral bridge (new)") then
         imgui.text(string.format("frame %d  attached=%s  rumbles fired %d", frame, tostring(attached), rumbles))
         if arr then
@@ -190,9 +239,3 @@ re.on_draw_ui(function()
         imgui.tree_pop()
     end
 end)
-
--- 2026-11-01: the slots for other scripts (Hand Poser reads the gun in hand at 57 and the left hand on the gun at 58)
-_G.visceral_bridge = {
-    ready = function() return arr ~= nil end,
-    r = function(slot) return arr and r(slot) or nil end,
-}

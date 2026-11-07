@@ -35,7 +35,9 @@ D2. **Everything game-specific leaves the shared files into `src/game/`.** Found
     the per-gun tables (`gun_data.h` keeps the structs and the lookups; the TABLES move to `src/game/guns_re2.cpp` /
     `guns_re3.cpp`), `MAG_LONG_WP` (RE2: the LE 5 2200; RE3: the CQBR 2000 and 2100), the pump list (RE3: the M3 1000 only),
     the Spark Shot (RE2 only). RE3's table: G19 0, G18 100 / 200, Samurai Edge 300, MUP 600 (magazines, Andyalpa's RE2
-    numbers, which re3check.cpp confirmed joint by joint 2026-10-15), Lightning Hawk 3000, CQBR 2000 / 2100 (long magazine),
+    numbers by WP id, as gen-1 RE3 used them; CORRECTED 2026-11-07 (Opus): re3check.cpp ran only on the M3 (joints _01 / _04
+    present); the G19's slide and rack were worn 2026-11-01 with these numbers; no magazine number was ever checked in RE3: the
+    simulator drive's magreport shows whether each magazine joint sits where the table says), Lightning Hawk 3000, CQBR 2000 / 2100 (long magazine),
     M3 1000 (pump + shells), MGL 4100 (layer 4).
 D3. **The loader: RE3's current one first, then the shared patch set as its own layer.** Layer 1 installs the bafff0dd loader
     RE3 wore (known good). Layer 1b (after the body and guns are worn): REFramework 76298bd + RE2's cumulative 2026-11-02 patch

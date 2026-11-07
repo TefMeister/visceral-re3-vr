@@ -1,0 +1,30 @@
+// gun_data.h -- what the gun code knows about each gun: the shapes of the per-gun numbers and the lookups. The numbers
+// themselves are each game's own (src/game/guns_table.cpp). Guns a lookup does not know keep the game's own reload.
+#pragma once
+#include "common.h"
+
+namespace vn::guns {
+
+// where the magazine sits in the left hand: offset from the left wrist joint in the wrist's axes (metres), and a turn
+// (degrees: yaw about Z, then pitch about Y, then roll about X)
+struct Hold { float ox, oy, oz, yaw, pitch, roll; };
+
+// a magazine gun: the joint that IS the magazine, where it sits just out of the magwell (the joint's local space), how close
+// a magazine must come to go in, the sound folder under reframework/data/custom_sfx/ and its volume, the hold per character
+struct MagGun { int wp; const char* joint; Vec3 exit; float dock; const char* sfx; float vol; Hold leon, claire; };
+
+// a slide or a pump: the joint that moves and its local-Z travel: rest = closed, parked = locked open, back = fully pulled
+struct SlideGun { int wp; const char* joint; float rest_z, parked_z, back_z; };
+
+// a pump gun's shells: the shell is the gun's own hidden mesh part on a joint; the port is where it goes in (the gun's
+// local space); his insert distance (ours is capped by SHELL_PORT_DOCK_M)
+struct ShellGun { int wp; const char* joint; int mesh_part; Vec3 port; float dock; const char* sfx; float vol; };
+
+const MagGun* mag_gun(int wp);
+const SlideGun* slide_gun(int wp);
+const ShellGun* shell_gun(int wp);
+bool is_pump(int wp);
+const char* pump_sfx(int wp);
+bool long_mag(int wp);    // the magazine sits ahead of the grip: LG on it + LT pulls it out, B does nothing
+
+} // namespace vn::guns

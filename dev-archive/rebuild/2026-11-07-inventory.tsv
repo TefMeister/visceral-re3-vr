@@ -1,0 +1,187 @@
+path	bytes	sha256	verdict
+PDPerfPlugin.dll	270848	2e3b10d46a587af3294ff1d02244ea410441befd1f8eaff329ff3f968d2d9a7f	DROP (DLSS off)
+_interaction_profiles_oculus_touch_controller.json	3968	12b5aa94aebc0de1ac494911a035d2846f5be9b6b2fd1f9de4b3833f1b23dd44	KEEP: layer 1 (controller bindings)
+dinput8.dll	22742016	bafff0dd2a183da2bb45a4ef915fb38a9a0075252afff8baf69ed09b934e962f	KEEP item 0: RE3's own patched REFramework 76298bd (bafff0dd), layer 1
+natives/stm/escape/character/player/pl0000/animation/list/hdg/base_hdg_hold.motlist.524	902792	3373370a041113df71519bfaa24d9d4221382372d6dd2d2fbba602336a086d1a	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/hdg/base_hdg_move.motlist.524	1768192	46498d7c3ea736697d43fbe85ff38b921d9505f40532042cb0cd91c4149a1f2c	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/mag/base_mag_hold.motlist.524	902296	59acd8379657ee44a3888f3070f47e05ba6b6c83d132b917ba9ee4c6e8071bbb	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/mle/base_mle_hold.motlist.524	916120	921cc2150b334a5ff415608fae0d0723a138b873c8ab103385075fbb4240a08d	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/rkl/base_rkl_hold.motlist.524	969968	b11874072725777ea1e99984851c9685dda5d6047d415363db7bb19e38b54121	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/rkl/base_rkl_move.motlist.524	2221408	0f83f34a80612f2ba10cd368db1d4a0578434739af31bebd1e0c78077b777514	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/smg/base_smg_hold.motlist.524	865664	4df098b52de511411dfab977d9352c1d0aad1fe4f9eae6fbf089950cc8038cc5	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/stg/base_stg_move.motlist.524	2011504	2f6dc72f16a6cfc7f950ce91f50cbfcad0701b5f601fa6cb1aefba1897593f69	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl0000/animation/list/sup/base_sup_hold.motlist.524	651096	508abceaaa97ee271874581ae09f30c2a3f34064a3ffaec2f2227d4e87fc6ff7	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/cmn/base_cmn_move.motlist.524	5657904	c59c2d441fb2c1e8cefeef8e2ecb7fba9f9f79c6f450bc719774108da226f9a9	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/gnl/base_gnl_hold.motlist.524	2312952	ce19c13bf7613be07992cb8daa95e351d8852342204c54c7fc597be1cfadbafc	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/hdg/base_hdg_hold.motlist.524	2886976	3f17260bf6a5a1d8ca2015536bae5da7e60f102113eb49c517833fede3a11742	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/hdg/base_hdg_move.motlist.524	2467120	daba717bb1d0c7ff2ce26216d59216ce7c7d917e4910f98694ad86e731fbece0	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/hdg/hdg_hold_05.motlist.524	2352384	b322cbb60b8b7d585ae946ceb447e09117543dedad99f8e1fae01fd26e09d02a	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/mag/base_mag_hold.motlist.524	2856560	ecc1c27aca5628ec485c7c30af26a8b27be811f36b5ea6bb62c6fc9557115acb	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/mle/base_mle_hold.motlist.524	1819416	03c1ccc1affa30f2e8697a259ea3364137d05da7ae156866f5d6cb9917e65c6a	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/rkl/base_rkl_hold.motlist.524	2331888	26ae113e4b0ba8c27f5bc62c0658e55cf6c4f568e61cc9bb23937eab523395f4	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/rkl/base_rkl_move.motlist.524	4671896	c659c2ac22831c62883e99d5acef8b047d6435c90b438a7fedc77163be371597	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/smg/base_smg_hold.motlist.524	2232768	2622de083ca047d3a6fc72eba7fc12e0842c4a8602657cc99b6bdd93246bfb31	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/base_stg_hold.motlist.524	2259512	b2ba115dc8f968ddeca83e13306e560fde0824a5c37b46dc0f7b70d382e30a9e	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/base_stg_move.motlist.524	4853328	c151bd44df98ca376c0a3f9192b50b2e3f5d72d3b14006dff7baaf56e4874bcd	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/stg_hold_cpab_01.motlist.524	1051560	3e8aadeebfed9bf4b43a31f43c1edc1aadff1df06be26ee2bfd3d5aa388e764d	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/stg_hold_cpabc_01.motlist.524	1044856	c7995ddcf2e74cf0e3b593db07e7c7f2975bd6983cefb190ebc18bfe90c6d2cf	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/stg_hold_cpb_01.motlist.524	1046792	b5dd9b93b0d7fd90a14f58e67c3a5574ed18c3408d402bd20cab6dc95cd1e6a9	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/stg/stg_hold_cpbc_01.motlist.524	1043992	a39acb9e6e0c8471704828a143818bbc2411edb120177a8010e2b521b7eb15aa	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/character/player/pl2000/animation/list/sup/base_sup_hold.motlist.524	1489656	99475d357c1c6684474314dfc68a168de7d8e84743081a63841d6c4fe56c4461	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_gg.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_hacktool.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_hg.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_hg_hp.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_rl.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_sg.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_smg.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/hold_wp0800.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/holdgrenade.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+natives/stm/escape/userdata/character/survivor/common/lookat/holdknife.user.2	804	06e8d75dcc98e9accad918ea75a75ec63912643d5da9c7dd354461fcfb467c18	KEEP item 0b: our generated hold poses (PC only), back in layer 2 from the backup
+nvngx_dlss.dll	54779504	8707e53b26c68c606b98bf31c223485ff30d310a261b1a36d48b2eaabc1507ec	DROP (DLSS off)
+openxr_loader.dll	647168	526edeb856744110183c5cc6b4edf975d2d84c62f9cc8cc830fa0b9e4f6f40c5	KEEP: layer 1
+re2_framework_log.txt	915383	7a1a3c736da45cdcea7293dd2e98644f823a0618fc5a72ea9985b5e7db36da0c	LOG: kept with the backup
+re2_fw_config.txt	3590	98e07b75bbfe0e574dcc4f568fc65b7238e2cda05e06469873a0f7f2d72f2cb3	KEEP: layer 1 (RE3's REFramework keeps RE2's file names)
+ref_ui.ini	127	c58bce73a197e3c93ad337b451e0cc3e9084966bc494e33a41f1f65668fd43bc	KEEP: REFramework's own UI layout (layer 1)
+reframework/autorun/hand_poser.lua	20502	786534d8af30a7328bc3a436138d130d74049e37911c5cd61f0f2fc9e9c2e9ff	TOOL: the Hand Poser app's own script
+reframework/autorun/re2_sharpness_removal.lua	2136	b195fd60dc1c6cdc77375731d09754c1787201e26ff1a3e47cb153c95c8e2718	KEEP: praydog's package script (layer 1)
+reframework/autorun/re2_smooth_movement.lua	6616	c106c05b97b424a61ce64dd0fe9828ea915c118bc884a7cbf866e67fb88a2544	KEEP: praydog's package script (layer 1)
+reframework/autorun/re2_vr_crosshair.lua	12602	634d85d182886a572904e0a5d097303b1b7da34f97eb9a1c9e2e828dc8fb7d47	KEEP: praydog's package script (layer 1)
+reframework/autorun/re2_vr_grenade.lua	11175	ee36397298906f0b8766836201f3ca4bb3b6b8fbb6c5a6c7d0591a7490132400	KEEP: praydog's package script (layer 1)
+reframework/autorun/re2_vr_melee.lua	28591	13d4023bd64fb33d11e28f52ba2b2cdd3a3c4560309784921e8ece263e60fd33	KEEP: praydog's package script (layer 1)
+reframework/autorun/re4_vr_crosshair.lua	8505	2d97d1968a2d76ad3656c36dcaf2665c12d657e937fd64b2cbded1bb7f1ef32a	KEEP: praydog's package script (layer 1)
+reframework/autorun/re8_vr.lua	95267	8a9076514f0e647038b1221d4d4c3685fe2d4d1e9104f8059019cbd40dd33556	KEEP: praydog's package script (layer 1)
+reframework/autorun/utility/GameObject.lua	1206	b8be7ac6601f63d813cd35cf295ccb9167a8fcc3e6d87ea9f3583a835163be2c	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/ManagedObjectDict.lua	428	9a160ced05114d70a4894f288d13c97073113fc21a95cd557dcc937a1d6bd17d	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/RE2.lua	2535	4a0ce3591052ce229c5ca3a54c496db70f3e246f969409992c34842a00233988	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/RE4.lua	3189	179172d0587ce22247ab3fc75dde2708bdc9ede90b4732dff8475a1b5dc773dd	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/RE7.lua	10275	a7588d6667d2401d3dc48616cefc4ce2872dcf922a5c655b9632626c691a7255	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/RE8.lua	10095	7efbebdd9d15d82225d68c7574dc2230f51f3947348616f31cfd3ff44cb73c28	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/utility/Statics.lua	1376	a912f4a6a9c4a4197ef5002e81973774152f46bbc577155ecab8d4aaa8004983	KEEP: praydog's package folder utility/ (layer 1)
+reframework/autorun/visceral_body_anchor.lua	9294	1c99e58938a440d8031fedc553361d13197c7672afc0b73834ee2942d1bbc9c7	KEEP: ran in b003 (layer 2, as Lua)
+reframework/autorun/visceral_body_direct.lua	4301	fc7d9d9637505bfb3348e554b981861566d089cb27c15fd04240445608f945d9	KEEP: ran in b003 (layer 2, as Lua)
+reframework/autorun/visceral_bridge.lua	11039	8c5585f6b89918b84bd1527477ebfb3c2af71a5715a7148771ac8923ebaf4dd8	REWRITE: the shared bridge (layer 2)
+reframework/autorun/visceral_hand_smooth.lua	2219	8bea38b4a4a1388edb319d086d795c536ca142a6f55f70de4c503590f6037b51	DROP the menu (no menu); the loader's filter and data/visceral/hand_smooth.json stay
+reframework/autorun/visceral_lefthand_hold.lua	5746	3683014a51bb1c22873b410a317d308514544f2ea40bb75e361fa73f6d39024b	KEEP: ran in b003 (layer 2, as Lua)
+reframework/autorun/visceral_mute_music.lua	1967	6c5cbc9f912e72b5f9c3c21a33b112afe6721eef3e251d0c239cfb198977c97c	KEEP: layer 1 (the music)
+reframework/autorun/visceral_steady_light.lua	10523	6f845bf3f1ab5bcf7468e9ff3199b7d646ee53f7fab8ba1a0d0c62df12b8ad6f	KEEP: ran in b003 (layer 2, as Lua)
+reframework/autorun/vr/VRControllerManager.lua	4800	245e8fbfc02bc7def19ab0af92dd217290071963c12c9aab662083213e3aeeb7	KEEP: praydog's package folder vr/ (layer 1)
+reframework/data/custom_sfx/common/dry_hammer.wav	12812	14947ae30f0176f137de02870e59c180e13f99e138f4229072c1b7c575d1eca6	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/dry_fire.ogg	20111	42bf33dd1bae647dc69c9ea88510d081032e3a59991b3ba5f9d68fea50112430	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/mag_drop.wav	54188	92ee4db0031fb9f2bc331bce60c847708c63e7a02ad96a1542984d8c7ee6a3fb	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/mag_floor.ogg	14144	19c748a63d18d4ffc18e79a45e019fbe52e8ef31a3583d43e14f2d5ee5ce5db9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/mag_grab.ogg	14519	7b821c7ea19a2779ee8e60413b96c0f7d15a0a168c5e4fc62d34611fa1e7fddf	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/mag_insert.ogg	11922	150b2fc24fdae7782ed078d69ba4bbecd3b0c96dc6eae3a1de5fa49c4e53b088	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/pump_fire.ogg	11615	2e469776c229fabb03b23a8b4ba490100cff82d9dc91e0af98d55ff4a34a5bfb	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/flamethrower/slide_rack_release.ogg	23917	1dcc7c29aad35834e24be242bb1dcb338d6422581da6bfd3c3eae2de0eff00cc	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/dry_fire.wav	62380	832f72c0a6e10aee973946fe0c69aa281a02d2503ad4f93e7cb993a725940f18	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/mag_drop.wav	31660	feb51fa6041e446bd6e23a41b915e6cae1a69699ff5f70d86308f0e2c6056566	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/mag_floor.ogg	11801	5238d84c17d9aab54784c7c16c08d66b8f33c270f64be772406b0b48c7a9cb92	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/mag_grab.wav	30380	c6bace9a3c5cda16649a8362c52dab92bd76c6b8109e30a6846deaaf3a16e66d	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/mag_insert.wav	21164	3c7c9751181926d3016ccc8cfe726096d2192fc3fea2f472e99cd218c63a2bb5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/grenade_launcher/pump_fire.wav	47788	ce5a270bff1a23eed5048de8a982c9de4c1cc56d92aaefeee45297a23f42ea24	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/dry_fire.ogg	11085	7dfc22d0cda8229961bb0b335d87bb96109cf53667fad579188b3448d137f3d9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/mag_drop.wav	30124	80bfaa20f5408901146f467f6536630fa643de573c3a586ddf003d7df26e0165	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/mag_floor.ogg	13579	006c32d08ec15b3ff386a37d726b4a78fc02bea3315e3e00b662dc4ba695ae87	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/mag_grab.wav	32940	2fc6d0beac64e56ffd4ded561b56027784e4e737c59de0c9f80ea9fe5efa2b73	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/mag_insert.wav	28588	b25f1cd004e195ae7aba818add1108ed21e9748d1ccd31c77a530935189194e1	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_cylinder_close.ogg	11767	2b33a9afc447e3303ca31af32c99fbea746fa12bf77e2ff6e3a200a946267937	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_mag_drop.ogg	15361	46d4e12a385bb95962c1671838bc4f955739583b960293e13baa3500a220d15b	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_mag_floor.ogg	12981	281e41b44a8ba3647ee228781137baea033683d5c7f00fbc5e0eb526aaf0470a	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_mag_grab.ogg	10244	7fa7243c87de67b1a249c2ce02d53669b09bc6e8c6d53dc7a87233da58514f4a	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_mag_insert.wav	34988	c4989dd7ca1ab7f0c45be5b45ecf62794fe801c4d9ea2806e565327868ec14cd	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_slide_pull.ogg	11764	bfc4b90f2e334baab7990a069e736ea042f7c72f785aeb2f78264d83e0389d59	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_slide_release.ogg	14628	50b830b70b5c140b25fd8a29d2a67f343652f3df19d89a307f475778a636b636	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_sw649_cylinder_close.wav	35244	4d3c6c03475e8fc1a42296f2715d7869faaac8066120c7ecb854e12d2d2981f6	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/revolver_sw649_cylinder_open.wav	72364	b8d512ee3a005b7b7e06a37efea14ff845b997308a050ea3789603b1ae305ee4	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/slide_rack_pull.ogg	19302	30af2a68e4bf81190ccf29adac584a54b287024ecb4a69ebba007bf7b77865d5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/handgun/slide_rack_release.ogg	18858	3581a0dd1f81aec2b74cb4c65e809d2bef4e28522e48d4efeaed54edcde02f95	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/knife/swing_1.wav	25004	d16a44118ac3c8d9c841f33de67535b6a2bd19a49d5b7b6427f215fe277147f9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/knife/swing_2.wav	24748	dbbcdd4e41bc9a4f937b142b1c39c11e7accfa57393b8fcf7934d1e58ec7a25c	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/knife/swing_3.wav	30380	bb5ccf929f15ad311e9dd1ec148f7a9172310a68ed712cd81399358eb07c71fb	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/dry_fire.ogg	11085	7dfc22d0cda8229961bb0b335d87bb96109cf53667fad579188b3448d137f3d9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/mag_drop.ogg	18004	c3fe6fd0c58febd24c892de91e9e951385aa3d182ec2ba477fc0e6b02aaf1bad	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/mag_floor.ogg	14745	dbe7aef0488844043b307ac93cdeb8da0e5d324cd09d5bc00f6dd7c03b45e827	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/mag_grab.ogg	16449	7df225a3063bb196e1d1503bf1f56c271d6acf8d449401d16872858f229cf9b9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/mag_insert.ogg	19500	9a57be075e6e13976cf42ebbe378318b9226141847009b1d90f65ea31f9cb4d1	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/slide_rack_pull.ogg	19302	30af2a68e4bf81190ccf29adac584a54b287024ecb4a69ebba007bf7b77865d5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/magnum/slide_rack_release.ogg	18858	3581a0dd1f81aec2b74cb4c65e809d2bef4e28522e48d4efeaed54edcde02f95	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/minigun/dry_fire.ogg	24539	043f83896a6516c3f723c914d9e6291ada1c4cab84b4c2e6ef6eff4cd27cc395	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/minigun/mag_drop.ogg	19714	17a08aad7ec447e761b41007c8d10677d7ebc734a443bedb446dc59b2171eb82	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/minigun/mag_floor.ogg	19714	17a08aad7ec447e761b41007c8d10677d7ebc734a443bedb446dc59b2171eb82	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/minigun/slide_rack_pull.ogg	19302	30af2a68e4bf81190ccf29adac584a54b287024ecb4a69ebba007bf7b77865d5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/minigun/slide_rack_release.ogg	18858	3581a0dd1f81aec2b74cb4c65e809d2bef4e28522e48d4efeaed54edcde02f95	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/rocket_launcher/mag_drop.ogg	22608	7dc905cfbcc281496fd284f6a14ae2087a6a2147cfbef74704f201c548223d57	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/rocket_launcher/mag_floor.ogg	22941	81a1f19b1a8f04855c82d4c414499536b755c15dfc7b25c4ed249ec098d055ad	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/rocket_launcher/mag_grab.ogg	16038	0cade690c9db666e5c6d3f5f85f9fe5fe134cfad48f7ba6b388b7d0db66c6616	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/rocket_launcher/mag_insert.ogg	19174	51b0cb9db931c7aeb644c0469fdb87ac15f00d9eba60f5f17bf2353c364cba02	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/dry_fire.wav	49068	f467a48a31e14b11efd73b2f6bb59c5d15537ab2e15026f1afe6eb1ba9d7f93c	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/mag_drop.ogg	13336	657a350a9b6c67e773d1a1e3ab442eb0a821e4562d1b079dcd2c4538ca96a8aa	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/mag_floor.ogg	12981	281e41b44a8ba3647ee228781137baea033683d5c7f00fbc5e0eb526aaf0470a	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/mag_grab.wav	26028	0324caa8ac2836a7215b542ecb327899986b902eb4d3bb00440da8ffa412122f	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/mag_insert.wav	31148	771e9825ebe7304da81105a5bc4009a4243e51f20b0fa589a2fd5fdde36820d2	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/pump_fire.ogg	70395	53c38f241cdfec3ec9ddfd5ff72ca4a886638c2aa1bbf35979db4e20391170a1	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/shotgun_fire.ogg	15361	46d4e12a385bb95962c1671838bc4f955739583b960293e13baa3500a220d15b	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/slide_rack_pull.ogg	6141	8a1739c5e3b9e5898c6ffc4dbb3ca615957ce33a631fea51b8b2aa6ab3d5c331	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/shotgun_w870/slide_rack_release.ogg	8038	4bb738eb59384fae8b4f37f65e09ea367f19ff6653e931cd160bfad15807b7e5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/dry_fire.ogg	11085	7dfc22d0cda8229961bb0b335d87bb96109cf53667fad579188b3448d137f3d9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/mag_drop.ogg	17092	7e8098d1e37a47e293478b64e5e3e3a0d3fffd49806946eebd12b74c551593b0	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/mag_floor.ogg	15189	a55c4892d6b1ef7e0fd1a84fe1638fcf0ace2780ed802d246cb3df2049e3b705	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/mag_grab.ogg	31213	a8feb0d8950893531547e6bacd1f354209b652510499f175d65d50bfe9b57445	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/mag_insert.ogg	30993	c8f3930b7c647b1cb591aff0dc28e5c89f6d4da88edb3b1f2508e2289aa288c7	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/slide_rack_pull.ogg	18145	758f249b02e2338a57edee1054cd6269e82207cd3d643484875f3af8e62fd9ee	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mp5/slide_rack_release.ogg	27564	238f9bdf352231deaa47e7c0eae1830c0a31425a2946f31877d7cc71c1f27fa5	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/dry_fire.ogg	11085	7dfc22d0cda8229961bb0b335d87bb96109cf53667fad579188b3448d137f3d9	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/mag_drop.ogg	10840	426d79992bee47a1e527e64adba31b6560d17b5ea45a6aba16577ae15cd197cb	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/mag_floor.ogg	15189	a55c4892d6b1ef7e0fd1a84fe1638fcf0ace2780ed802d246cb3df2049e3b705	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/mag_grab.ogg	16303	f842dfae8678bc11700f4495412007e7a3033c04154894ce57afedb786d42e98	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/mag_insert.ogg	17092	7e8098d1e37a47e293478b64e5e3e3a0d3fffd49806946eebd12b74c551593b0	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/slide_rack_pull.ogg	18838	bac301e5e6fdd232b591eda3bde1d17f03f985543d29aa6093665f2155c6f91d	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/smg_mq11/slide_rack_release.ogg	27189	29837cb6a5e017424f3dc55958e9bfec2bba88d00d254acde83c651ba6296f24	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/dry_fire.wav	49068	1f040fa93299d556358882793254778c6fed7c19a57143f85e10eef5f75c82f2	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/mag_drop.ogg	11922	150b2fc24fdae7782ed078d69ba4bbecd3b0c96dc6eae3a1de5fa49c4e53b088	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/mag_floor.ogg	13579	006c32d08ec15b3ff386a37d726b4a78fc02bea3315e3e00b662dc4ba695ae87	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/mag_grab.ogg	13879	dadcb11842d1df58a4b3091e695296a84422412e43e62696651140d5568f2eb0	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/mag_insert.ogg	21097	58491d48bfcf7dd6f7acaec2604c97f12314c565ac9e045946ba142e1f45b189	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/pump_fire.ogg	122291	19e21fe9f0dd51ef6b8bbcf9e22ffecccf1682fdf292d2a28ed0c72ae39e86db	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/slide_rack_pull.ogg	20448	a294e1faf8706acd7b4ec1db86cb2e148f4cc356cc937849372b3e32595d9ed1	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/custom_sfx/spark_shot/slide_rack_release.ogg	13516	856ee888253fdfcd4787a79e14d1df331aa9725b54b97cda9527c6e94ae84559	KEEP: our custom sounds (the empty click and the reload sounds), layer 2
+reframework/data/hand_poser/state.json	2485	e753b957e7eedfe4497df03ae7e043ad3c94f68daa41628bfebf3f71241db202	TOOL: Hand Poser's live files
+reframework/data/re2_vr/crosshair_config.json	123	a59d652b7dc2cbd11502ed94e932c212bd5280aeb28e920d6c46cc66f6b15ef6	KEEP: praydog's VR settings (layer 1)
+reframework/data/visceral/clips/wp1000_round_in.csv	53804	b1ad1a1e883046e0e29ab1a8b72bbe4847bb5203ee85b90f46f8eef3084ca13f	GAME DATA: old clips, regenerated in layer 6
+reframework/data/visceral/hand_smooth.json	79	2836e0a6e41cf50fafd6feac6f6057186a5fc3e6810833f8d9ab2a770697543d	KEEP: the loader's smoothing settings (layer 1)
+reframework/data/visceral_options_set.txt	168	581d85141f47b3756d11346005d266cac145e71bb2b88017c18656dc61042cdb	KEEP: read by a kept feature (options / steady light), layer 2
+reframework/data/visceral_steady_light.json	62	0440466462e1b7e5a73c304436936d830fe29cb375cf943811708a099c56553f	KEEP: read by a kept feature (options / steady light), layer 2
+reframework/plugins/Ijwhost.dll	137040	7a2e9f581aeecf1bdc9c770e07eb981563dbd1a71229f21e6dcec182d8c64325	TOOL: the REFramework MCP's own plugin
+reframework/plugins/REFramework.NET.dll	651264	568d28099ef169cf2017d8f894c6de1748fa49347127bf8c8daf91db28ac128c	TOOL: the REFramework MCP's own plugin
+reframework/plugins/REFramework.NET.runtimeconfig.json	436	9b95b8830651ffc8bb8bead67eff5bded5d8965ed2135aaddfa9f80e2edefc9e	TOOL: the REFramework MCP's own plugin
+reframework/plugins/REFramework.NET.xml	15903	cecf9d63e9bfd79c79822da5f121a3a0110a0ed8bea971cd6a5e3b8da1c0b626	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/AssemblyGenerator.dll	57856	814e57f92fe4020969b3a5d47eb160021c4766401c920c52270804b867028656	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Hexa.NET.ImGui.dll	5071360	b18b1e4bdabe84184bf5c7f55dce007b0d99e55ed0a1728d8d71835c7e702c27	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Hexa.NET.ImGui.xml	8377561	e2a81bb6ab67063a86aeeaec253cf9f84b11360aceadb3a753844b4b2efb188b	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/HexaGen.Runtime.dll	28160	f9fb2181b4dfe137a3137ff4defe0cafeba45774d73d78b874ff2a7fa67fc22f	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/HexaGen.Runtime.xml	4650	f75f23336dc2b4374c010d94daab3cccbbd788d96631ce76dfca77641ededf1e	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Microsoft.CodeAnalysis.CSharp.dll	6412448	b3bbb8fac5ff737dca1f2041b450d0cd1039d7445431ef90a335dfdcdc992533	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Microsoft.CodeAnalysis.CSharp.xml	3255519	cae1210aeb99380fd679950806936463aef4a9785759149f94e12d59e0fcffa0	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Microsoft.CodeAnalysis.dll	2938120	0662c67ffa3927d56029d212d9bb3608c667da96c2283cfe2f869e0376806d6a	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/Microsoft.CodeAnalysis.xml	2522237	b9ece8980da4637ae6e576a88fb9434f131cc71a8285bf1ce8fbf7b87040e789	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/dependencies/REFCoreDeps.dll	34304	36de955ba719e1f3ba1c289e369488574d81d8e5bb9f9e97e597c80090bc2130	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/REFramework.NET._System.Core.dll	18432	b14d242e8573acd32586cb2d7afacbdeea5d14bb9b8e5aac45b908a90cf212c8	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/REFramework.NET._System.dll	15872	5ae0a9bab148c73b7079442b6413fb9329d717903f57836af235db905a4c2d1e	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/REFramework.NET._mscorlib.dll	536064	bd11d0d254a9cec4fa3298a3120be3dc01a7ade5dfbc67741f8c5fa07271d2b3	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/REFramework.NET.application.dll	19927552	9ee4c07feb00b26440717e4a31ffc82aa0d7f01018302b403b26e31ed50a76cf	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/REFramework.NET.viacore.dll	6585344	6267bb1aec9897515d9713640ecf863903e7ecec1821536ca669b0843b1c69bd	TOOL: the REFramework MCP's own plugin
+reframework/plugins/managed/generated/metadata.json	177	ff9773a4f16d2c34306dd15e94edf5c3ecbf7adfa899dd698badb3b4903467bc	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/TestWebAPI.cs	203469	62cec2792650d4d58fc080e93a0af0cb17812b31ce5c317f55ab2666f77bf0bc	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/AGENT.md	19535	fc1bc893c3e96812a326f952857a782c0a2edb3becca1dfd2a466a4f07b71d0b	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/HTTP_API.md	8124	58a79676018bc20f91a34372c568388a87b2b292e3f3933fadcf98c72485c34b	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/dashboard.js	63110	4a855970d0e42cd43493e9c2bdfd28066205195fb8212f2b126112b04f0ce050	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/explorer.html	522	5529ac3757cebfc22fc12a1fdf6de2beaa6705dfd07105fd34384aea687a3833	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/explorer.js	12492	41371e70e98c8f84ca604fc5aa3628744e2c74a072577f6878b0882682146e2c	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/index.html	4519	7578c02d12c6693dd3345bd1673fb4e8cc3ee2fa8918397241ec92d874de5bfa	TOOL: the REFramework MCP's own plugin
+reframework/plugins/source/WebAPI/style.css	19258	f140f990262704a951dededeffb3228a8ff64b3ec371dcab34357ab04c9bb7ec	TOOL: the REFramework MCP's own plugin
+reframework/plugins/visceral_native.dll	844800	4f0d215ee65cf9129a50a6abe6371b4a3ea74d797d42cd7a94c9306985b7a59b	REWRITE: the new plugin
+reframework_accessed_files.txt	1413324	5c3d68a7384cd9cae87c1557d47d812fa823de9d32212eb57688df67c08f4eb9	LOG: kept with the backup
+reframework_loose_files.txt	3569	c2aa2213864fbbafbd753c32a00743564f8d4858065a2df0b5214bfee4a68ee5	LOG: kept with the backup
+reframework_revision.txt	42	dd4f5615a95a9bba628a17d530f9382eda9784a740d8a047afcc53a81555d23b	DROP: a stray note of the loader's commit

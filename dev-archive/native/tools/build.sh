@@ -1,21 +1,34 @@
 #!/usr/bin/env bash
-# Build visceral_native.dll (Release x64) and, with --deploy, install it + the bridge Lua into the Steam game.
-#   bash dev-archive/native/tools/build.sh [--deploy]
+# Build visceral_native.dll (Release x64) and, with --deploy, put exactly one layer of the install list into the RE2 folder.
+#   bash dev-archive/native/tools/build.sh [--deploy] [--layer N] [--dry]
+# The clean rebuild (2026-11-07): install-list.txt says what each layer holds; deploy.py moves every other file of ours out
+# (to D:/claude video game stuff/re2-removed-by-deploy/<time>/, never deleted). The default layer is the highest one listed.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
-GAME="/c/Steam/steamapps/common/RE3"   # Visceral RE3 port, 2026-10-10
-BUILD="$HERE/build"
-[ -f "$BUILD/CMakeCache.txt" ] || cmake -S "$HERE" -B "$BUILD" -G "Visual Studio 17 2022" -A x64 >/dev/null
-DLL="$BUILD/Release/visceral_native.dll"
-rm -f "$DLL"   # a failed build must never leave an old DLL to deploy
-cmake --build "$BUILD" --config Release 2>&1 | tee "$BUILD/last-build.log" | grep -E "warning|error|Build succeeded|FAILED" || true
-[ -f "$DLL" ] || { echo "BUILD FAILED"; exit 1; }
-ls -l "$DLL"; sha256sum "$DLL"
-if [ "${1:-}" = "--deploy" ]; then
-    mkdir -p "$GAME/reframework/plugins" "$GAME/reframework/autorun"
-    cp "$DLL" "$GAME/reframework/plugins/visceral_native.dll"
-    cp "$HERE/lua/visceral_bridge.lua" "$GAME/reframework/autorun/visceral_bridge.lua"
-    mkdir -p "$GAME/reframework/data/custom_sfx/common"
-    cp "$HERE/sfx/dry_hammer.wav" "$GAME/reframework/data/custom_sfx/common/dry_hammer.wav"   # the empty click (2026-11-01)
-    cmp "$DLL" "$GAME/reframework/plugins/visceral_native.dll" && cmp "$HERE/lua/visceral_bridge.lua" "$GAME/reframework/autorun/visceral_bridge.lua" && echo "deployed OK"
+DEPLOY=0; DRY=""; LAYER=""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --deploy) DEPLOY=1 ;;
+        --layer) LAYER="$2"; shift ;;
+        --dry) DRY="--dry" ;;
+        *) echo "unknown option $1"; exit 2 ;;
+    esac
+    shift
+done
+[ -n "$LAYER" ] || LAYER=$(grep -E '^[0-9]' "$HERE/tools/install-list.txt" | awk '{print $1}' | sort -n | tail -1)
+
+if [ -f "$HERE/CMakeLists.txt" ]; then
+    BUILD="$HERE/build"
+    [ -f "$BUILD/CMakeCache.txt" ] || cmake -S "$HERE" -B "$BUILD" -G "Visual Studio 17 2022" -A x64 >/dev/null
+    DLL="$BUILD/Release/visceral_native.dll"
+    rm -f "$DLL"   # a failed build must never leave an old DLL to deploy
+    cmake --build "$BUILD" --config Release 2>&1 | tee "$BUILD/last-build.log" | grep -E "warning|error|Build succeeded|FAILED" || true
+    [ -f "$DLL" ] || { echo "BUILD FAILED"; exit 1; }
+    ls -l "$DLL"; sha256sum "$DLL"
+else
+    echo "no plugin yet (layer 1 is the loader only)"
+fi
+
+if [ "$DEPLOY" = 1 ]; then
+    python -I "$HERE/tools/deploy.py" --layer "$LAYER" $DRY
 fi
