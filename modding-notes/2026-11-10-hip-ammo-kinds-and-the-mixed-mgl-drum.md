@@ -57,3 +57,24 @@ at the left hip as before (the insert itself was not run again).
   kinds before them run out. A way to choose is Tefa's call.
 - RE2 has the shared code (it compiles) but no gun in its table: the GM 79's flame / acid item numbers are not read yet.
 - The order rounds fire in is first in, first out. A real drum would fire in chamber order; say if it should differ.
+
+## Later the same day: the drum has chambers (b012, simulator only, unworn)
+
+Tefa: *"rounds fire follow the drums chambers if at all possible"* (and: only two kinds of ammo in RE games; checked: RE3's
+MGL has four by the game's own names, RE2's GM 79 two).
+
+- **The game has no chambers.** Its drum joint `_02` does not turn when the gun fires (the same local rotation after one and
+  after three shots) and nothing in the gun says which chamber holds what. `[measured 2026-11-10]`
+- So the chambers are ours (`guns/rounds.cpp`, `RoundGun` in `gun_data.h`: the drum joint, the turn direction, the six chamber
+  joints `_06` .. `_11`, `_06` at the barrel at rest): a round goes into the EMPTY CHAMBER NEAREST THE HAND, a shot fires the
+  chamber at the barrel (or the next loaded one round the drum) and the drum turns one on, and the game's kind is kept on
+  the chamber that fires next. The drum joint is turned by us each frame, 60 degrees per chamber, so the gun shows it.
+- Robot test `[verified-live 2026-11-10, simulator, n=1]`: `mgl_test.py fire4 left@leftlow right@rightside fire4` on an empty
+  drum: Explosive into chambers 4 and 5 (the hand 1 mm and 47 mm away), then Acid into chambers 1 and 2; the shell kinds
+  made on firing: 2, 2, 1, 1 (acid first: drum order, not loading order). After two shots the chamber joint `_08` sat at
+  the barrel's place (0, 0.098) in the gun's space: the turn direction is right.
+- Still as before: the drum is closed while the hand loads it (the round passes through the drum's wall, nothing is drawn
+  in the hand), and with the barrel's chamber empty the drum only turns to the next loaded one when the shot is fired.
+- A lead for the round in the hand, not followed: the gun's `ShellCartridgeController` holds nothing between reloads
+  (UserData nil, State 5); the gun's children are an acid effect object and its `BulletGrenadeGenerator`. The loose round
+  the game's own reload shows must be looked for WHILE that reload plays.

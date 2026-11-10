@@ -10,6 +10,10 @@ LEFT_REST = (-0.30, 1.30, -0.25)
 HIP = {"left": (-0.20, 1.08, -0.02), "right": (0.20, 1.08, -0.02)}
 
 
+# spots in the gun's own space: beside the drum's chambers (rest positions, read 2026-11-10)
+SPOTS = {"top": (0.0, 0.098, 0.150), "rightside": (0.041, 0.074, 0.150), "leftlow": (-0.041, 0.028, 0.150), "bottom": (0.0, 0.004, 0.150)}
+
+
 def send(lpos, lkw=None, rkw=None):
     lp = I.pose_from_ypr(lpos, 0, 0)
     inp = I.Input().mode(poses="set", buttons="set")
@@ -36,8 +40,10 @@ def fire(n=1):
         send(LEFT_REST, rkw={"trigger": 1.0}); time.sleep(0.4); send(LEFT_REST); time.sleep(2.2)
 
 
-def load_from(hip):
+def load_from(hip, target=None):
     """LG at that hip, carry to the port (closing in on it by asking the game), LT, let go"""
+    if target:
+        ask("E.port = { x = %f, y = %f, z = %f } return 1" % target)
     send(HIP[hip]); time.sleep(0.8)
     send(HIP[hip], lkw={"squeeze": 1.0}); time.sleep(0.8)
     pos = list(LEFT_REST)
@@ -66,8 +72,9 @@ def main():
     for step in sys.argv[1:]:
         if step.startswith("fire"):
             fire(int(step[4:] or 1))
-        elif step in ("left", "right"):
-            load_from(step)
+        elif step.split("@")[0] in ("left", "right"):
+            hip, _, at = step.partition("@")
+            load_from(hip, SPOTS.get(at))
         print(f"-- after {step}")
         for ln in log_tail(mark):
             print("   " + ln)
