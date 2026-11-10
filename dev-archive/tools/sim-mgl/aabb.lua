@@ -1,0 +1,5 @@
+local gun = E.eq:call("get_EquipWeapon")
+local mesh = gun:call("get_Mesh")
+local b = mesh:call("get_WorldAABB")
+local mn, mx = b:get_field("minpos"), b:get_field("maxpos")
+return string.format("size %.3f %.3f %.3f", mx.x - mn.x, mx.y - mn.y, mx.z - mn.z)

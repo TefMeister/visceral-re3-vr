@@ -5,7 +5,8 @@ import vb_input as I, vb_settings as S, vb_sim
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = r"C:\Steam\steamapps\common\RE3\re2_framework_log.txt"
-RIGHT = I.pose_from_ypr((0.15, 1.40, -0.30), 0, 0)        # the gun held forward
+RIGHT = I.pose_from_ypr((0.08, 1.40, -0.16), 0, 78)        # the gun held forward
+RIGHT_UP = I.pose_from_ypr((0.08, 1.40, -0.16), 0, 125)    # the muzzle tipped up
 LEFT_REST = (-0.30, 1.30, -0.25)
 HIP = {"left": (-0.20, 1.08, -0.02), "right": (0.20, 1.08, -0.02)}
 
@@ -32,17 +33,55 @@ def log_tail(mark):
     with open(LOG, "rb") as f:
         f.seek(mark)
         text = f.read().decode("utf-8", "replace")
-    return [ln.split("[info] ", 1)[-1][:170] for ln in text.splitlines() if "rounds:" in ln or "shells:" in ln or "ammo:" in ln]
+    return [ln.split("[info] ", 1)[-1][:170] for ln in text.splitlines() if "rounds:" in ln or "shells:" in ln or "cylinder:" in ln]
 
 
 def fire(n=1):
     for _ in range(n):
-        send(LEFT_REST, rkw={"trigger": 1.0}); time.sleep(0.4); send(LEFT_REST); time.sleep(2.2)
+        send(LEFT_REST, rkw={"trigger": 1.0}); time.sleep(0.8); send(LEFT_REST); time.sleep(2.4)
+
+
+def close_in(pos, lkw):
+    """step the left hand until the point it carries is at E.port; the hand's place and the miss"""
+    d = 9.0
+    for _ in range(8):
+        a = ask("-f", os.path.join(HERE, "port.lua")).split()
+        if len(a) != 4:
+            print("   port ask failed:", a); break
+        ex, ey, ez, d = map(float, a)
+        if d < 0.05:
+            break
+        pos = [pos[0] + ex, pos[1] + ey, pos[2] + ez]
+        send(pos, lkw=lkw); time.sleep(0.7)
+    return pos, d
+
+
+def drum_toggle():
+    """the empty left hand on the drum with LG, then LT: opens or closes it"""
+    ask("E.hold = { x = 0, y = 0, z = 0 } E.tj = '_02' return 1"); print("   " + ask("-f", os.path.join(HERE, "target.lua")))
+    pos = list(LEFT_REST)
+    send(pos, lkw={"squeeze": 1.0}); time.sleep(0.6)
+    pos, d = close_in(pos, {"squeeze": 1.0})
+    print(f"   wrist {d:.3f} m from the drum")
+    send(pos, lkw={"squeeze": 1.0, "trigger": 1.0}); time.sleep(0.4)
+    send(pos, lkw={"squeeze": 1.0}); time.sleep(1.2)
+    send(LEFT_REST); time.sleep(0.8)
+    ask("E.hold = nil return 1")
+
+
+def tip_up():
+    global RIGHT
+    keep, RIGHT = RIGHT, RIGHT_UP
+    send(LEFT_REST); time.sleep(2.0)
+    RIGHT = keep
+    send(LEFT_REST); time.sleep(1.0)
 
 
 def load_from(hip, target=None):
     """LG at that hip, carry to the port (closing in on it by asking the game), LT, let go"""
-    if target:
+    if isinstance(target, str):
+        ask("E.tj = '%s' return 1" % target); print("   " + ask("-f", os.path.join(HERE, "target.lua")))
+    elif target:
         ask("E.port = { x = %f, y = %f, z = %f } return 1" % target)
     send(HIP[hip]); time.sleep(0.8)
     send(HIP[hip], lkw={"squeeze": 1.0}); time.sleep(0.8)
@@ -74,7 +113,11 @@ def main():
             fire(int(step[4:] or 1))
         elif step.split("@")[0] in ("left", "right"):
             hip, _, at = step.partition("@")
-            load_from(hip, SPOTS.get(at))
+            load_from(hip, at if at.startswith("_") else SPOTS.get(at))
+        elif step in ("open", "close"):
+            drum_toggle()
+        elif step == "tip":
+            tip_up()
         print(f"-- after {step}")
         for ln in log_tail(mark):
             print("   " + ln)

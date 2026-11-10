@@ -12,7 +12,7 @@ local gun = E.eq:call("get_EquipWeapon")
 local gtf = gun:call("get_GameObject"):call("get_Transform")
 local gp, gq = gtf:call("get_Position"), gtf:call("get_Rotation")
 local PORT = E.port or { x = 0.000, y = 0.051, z = 0.261 }
-local HOLD = { x = 0.108, y = -0.042, z = 0.032 }
+local HOLD = E.hold or { x = 0.108, y = -0.042, z = 0.032 }
 local r = qrot(gq, PORT)
 local port = { x = gp.x + r.x, y = gp.y + r.y, z = gp.z + r.z }
 local wp, wq = lw:call("get_Position"), lw:call("get_Rotation")

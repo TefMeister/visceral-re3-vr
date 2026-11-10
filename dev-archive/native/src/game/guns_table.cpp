@@ -45,7 +45,8 @@ constexpr ShellGun SHELL_GUNS[] = {
 // RE3 item numbers (read from the running game 2026-11-10): 37 Explosive, 38 Acid, 39 Flame, 36 Mine Rounds
 constexpr RoundGun ROUND_GUNS[] = {
     // the drum is joint _02 (under _01); its six chambers _06 .. _11, _06 at the barrel at rest (read 2026-11-10)
-    {4100, {37, 38, 39, 36}, "_02", 1.0f, {"_06", "_07", "_08", "_09", "_10", "_11"}},
+    {4100, {37, 38, 39, 36}, "_02", 1.0f, {"_06", "_07", "_08", "_09", "_10", "_11"},
+     "_01", -100.0f, "shotgun_w870", 2.0f},   // the drum swings out on _01, 100 degrees, to the gun's left (toward the loading hand)
 };
 } // namespace
 

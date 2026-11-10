@@ -78,3 +78,32 @@ MGL has four by the game's own names, RE2's GM 79 two).
 - A lead for the round in the hand, not followed: the gun's `ShellCartridgeController` holds nothing between reloads
   (UserData nil, State 5); the gun's children are an acid effect object and its `BulletGrenadeGenerator`. The loose round
   the game's own reload shows must be looked for WHILE that reload plays.
+
+## The same day, third part: the drum swings open, rounds are drawn (b013, b014; simulator only, unworn)
+
+Tefa: "carry on" (the round in the hand, and design D5's open / close).
+
+- **Where the rounds are.** Lifting one joint at a time 1.5 m away and reading the gun mesh's world bounding box: the box
+  grows for each chamber joint (`_06`, `_07`, `_09` tried; also `_03`, `_05`, other gun parts) and does NOT for `_100` /
+  `_101`. So every chamber joint carries a round of the gun's own, and `_100` / `_101` carry nothing. `[measured 2026-11-10]`
+  (A screenshot could not settle it; the bounding box did in one question each.)
+- **Drawn from that** (`guns/rounds.cpp`): a chamber's round is shown when the chamber is loaded or holds a spent case and
+  shrunk to nothing when it is empty; the rounds in the hand are empty chambers' rounds moved to the hand (two, 4.5 cm
+  apart). All kinds look the same (one mesh). Seen: two rounds in Jill's left hand in a simulator picture
+  `[verified-live 2026-11-10, simulator, n=1]`; how they sit in the fingers is for the poser tools.
+- **`guns/cylinder.{h,cpp}` (shared; D5's first cut):** the left wrist within 15 cm of the drum, LG held, LT pressed, the hand
+  empty: the drum swings out on joint `_01`, 100 degrees to the gun's LEFT (b013 swung it up and to the right; b014 turned
+  it), 400 degrees a second; the same press closes it. While it is not fully closed the gun does not fire. Rounds go in only
+  while it is open. A fired chamber keeps a spent case (`x` in the log) and cannot be loaded until the open gun is tipped
+  muzzle-up 30 degrees, when all spent cases leave at once.
+- Robot test `[verified-live 2026-11-10, simulator, n=1]`, `mgl_test.py fire3 open tip left@_10 right@_07 close fire5`:
+  `opening`, `3 spent case(s) tipped out`, Explosive into chambers 0 and 2 and Acid into chamber 1 (the chambers nearest the
+  hand, with the drum swung out: `_10` at (-0.078, 0.119, 0.150) in the gun's space), `closing`, then the shell kinds made:
+  1, 1, 1 (chambers 3, 4, 5), 1 (chamber 0), 2 (chamber 1: the acid round in its turn). On b013: a trigger pull with the
+  drum open made no shot.
+- For the robot: the gun points level with the right hand at pitch 78 (pitch 0 points it at the floor), muzzle-up at pitch
+  125; a trigger press of 0.4 s is sometimes missed, 0.8 s is not; the left arm reaches the drum only with the gun held
+  close (right hand at (0.08, 1.40, -0.16)).
+- **Not done:** the closing flick (D5: a downward flick also closes), a sound of its own (the shotgun's are used), a spent
+  case that looks spent (it is drawn as a whole round), cases seen falling. Whether the swing matches the game's own reload
+  turn was not compared `[hypothesis]`: left was chosen because the left hand loads.
