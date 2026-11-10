@@ -107,3 +107,32 @@ Tefa: "carry on" (the round in the hand, and design D5's open / close).
 - **Not done:** the closing flick (D5: a downward flick also closes), a sound of its own (the shotgun's are used), a spent
   case that looks spent (it is drawn as a whole round), cases seen falling. Whether the swing matches the game's own reload
   turn was not compared `[hypothesis]`: left was chosen because the left hand loads.
+
+## The same day, fourth part: Tefa's change of plan. ONE pouch, LT chooses the kind, the game's HUD, a colour per kind (b015, b016)
+
+Tefa, shown that the MGL has four kinds: *"shit there are 4 types huh. change of plans, left holster ammo pouch must be used
+for all of them, LG+LT press chooses next ammo type and this needs some sort of a hud icon showing the change, and the ammo
+itself looking different. please scrap the different hip holsters for different ammo idea."*
+
+- **The right-hip pouch is gone** (RE3's `body/holster.cpp` is as it was; `guns::alt_pouch` / `pouch_grab_alt` removed).
+- **One pouch:** LG at the left hip gives the kind chosen for this gun (`rounds::selected`, kept per gun for the session; the
+  first kind carried at the start). **With the rounds in the hand and the hand away from the gun, LT steps to the next kind
+  carried** (`rounds::cycle`): the hand then holds that kind. (LG + LT ON THE DRUM with an EMPTY hand still opens / closes
+  it; LT with the rounds AT a chamber still puts them in.) Robot test `[verified-live 2026-11-10, simulator, n=1]`:
+  `mgl_test.py ... left@_10 left*1@_07`: two Explosive in, then a grab, one LT step (`the pouch gives item 38 now (was
+  37)`), two Acid in; fired in drum order 1 1 1 2 2 1.
+- **The HUD is the game's own.** RE3's ammo counter is `offline.gui.EsRemainingBulletBehavior` on the object
+  `GUI_RemainingBullet` (RE2's is `gui.RemainingBulletBehavior`: our hook looked for that name in RE3 and logged "not
+  found", so the counter after a reload NEVER showed in RE3 until now). Its `set_TriggerSwitchBullet(true)` with
+  `set_RequestDraw(true)` brings up the game's list of the gun's kinds of round, each with its icon and count, the loaded
+  one marked (seen in a simulator picture, beside the gun). `game_reload::show_kind_switch` does that on a step. While it
+  shows (2.5 s) the slot's kind is the one CHOSEN; a shot puts it back on the chamber coming up first (a hook before
+  `Equipment.requestFire`). Measured after a step: drawn from 0.4 s to 2.4 s, the name text "Acid Rounds".
+  `[verified-live 2026-11-10, simulator, n=1]`
+- **A colour per kind.** The gun's mesh has two materials; the second, `wp4100_GrenadeBullet_Mat`, paints EVERY round, and its
+  first value is `BaseColor` (1, 1, 1, 1 as shipped; `Mesh.setMaterialFloat4(1, 0, colour)`). So all the gun's rounds take
+  one colour at a time: the kind in the hand while rounds are held, else the kind coming up. Explosive plain, Acid green,
+  Flame red, Mine blue (the table in `game/guns_table.cpp`). Seen: two red rounds in the hand after stepping to Flame.
+  **Limit, said plainly:** a mixed drum cannot show each chamber's own colour this way; that needs rounds that are their
+  own objects.
+- Rounds show in the hand even when no chamber is empty (a chamber with a spent case lends its round).

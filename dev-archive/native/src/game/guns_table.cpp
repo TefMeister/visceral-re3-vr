@@ -46,7 +46,10 @@ constexpr ShellGun SHELL_GUNS[] = {
 constexpr RoundGun ROUND_GUNS[] = {
     // the drum is joint _02 (under _01); its six chambers _06 .. _11, _06 at the barrel at rest (read 2026-11-10)
     {4100, {37, 38, 39, 36}, "_02", 1.0f, {"_06", "_07", "_08", "_09", "_10", "_11"},
-     "_01", -100.0f, "shotgun_w870", 2.0f},   // the drum swings out on _01, 100 degrees, to the gun's left (toward the loading hand)
+     "_01", -100.0f, "shotgun_w870", 2.0f,   // the drum swings out on _01, 100 degrees, to the gun's left (toward the loading hand)
+     // the rounds' material is the mesh's second (wp4100_GrenadeBullet_Mat), its BaseColor the first value (read 2026-11-10);
+     // the colours follow the game's own icons: Explosive plain, Acid green, Flame red, Mine blue
+     1, 0, {{1.0f, 1.0f, 1.0f}, {0.55f, 1.0f, 0.30f}, {1.0f, 0.35f, 0.20f}, {0.35f, 0.60f, 1.0f}}},
 };
 } // namespace
 

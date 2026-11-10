@@ -19,14 +19,12 @@ struct Zone {
     bridge::Slot grip;      // the button that acts in it
     int dir;                // the shortcut slot it holds (Tefa's mapping), or NO_SHORTCUT
     bool inside = false;
-    bool alt = false;       // the second kind of round: there only while the gun in hand has one carried (guns::alt_pouch)
 };
 
 // Tefa 2026-10-05: right = right hip, bottom = left hip, left = left shoulder, top = right shoulder
 Zone g_zones[] = {
     {"flashlight (upper left of the head)", cfg::FLASHLIGHT,     bridge::LEFT,  bridge::S_LGRIP, NO_SHORTCUT},
     {"ammo pouch (left hip)",                cfg::LEFT_HIP,       bridge::LEFT,  bridge::S_LGRIP, NO_SHORTCUT},
-    {"second ammo (right hip, left hand)",   cfg::RIGHT_HIP,      bridge::LEFT,  bridge::S_LGRIP, NO_SHORTCUT, false, true},
     {"back (sub weapon)",                    cfg::BACK,           bridge::RIGHT, bridge::S_RGRIP, NO_SHORTCUT},
     {"right hip",                            cfg::RIGHT_HIP,      bridge::RIGHT, bridge::S_RGRIP, shortcut::RIGHT},
     {"left hip",                             cfg::LEFT_HIP,       bridge::RIGHT, bridge::S_RGRIP, shortcut::DOWN},
@@ -103,7 +101,6 @@ void frame() {
     track_slots();
     if (!bridge::live()) return;
     for (auto& z : g_zones) {
-        if (z.alt && !guns::alt_pouch()) { z.inside = false; continue; }
         const float d = dist(bridge::hand_pos(z.hand), zone_pos(z.off));
         if (!z.inside && d < cfg::ZONE_ENTER_M) {
             z.inside = true;
@@ -113,7 +110,6 @@ void frame() {
         }
         if (!z.inside || !bridge::pressed(z.grip)) continue;
         if (z.dir == NO_SHORTCUT) {
-            if (z.alt) { guns::pouch_grab_alt(); continue; }
             if (z.off.side == cfg::LEFT_HIP.side && z.hand == bridge::LEFT && guns::pouch_grab()) continue;   // b132
             if (z.hand == bridge::RIGHT) continue;   // b134: the back spot is subweapon.cpp's (it reads the press itself)
             bridge::rumble(z.hand, cfg::BUZZ_GRAB_AMP, cfg::BUZZ_GRAB_SEC);

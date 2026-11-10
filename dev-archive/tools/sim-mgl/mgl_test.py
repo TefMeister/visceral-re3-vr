@@ -77,7 +77,7 @@ def tip_up():
     send(LEFT_REST); time.sleep(1.0)
 
 
-def load_from(hip, target=None):
+def load_from(hip, target=None, cycles=0):
     """LG at that hip, carry to the port (closing in on it by asking the game), LT, let go"""
     if isinstance(target, str):
         ask("E.tj = '%s' return 1" % target); print("   " + ask("-f", os.path.join(HERE, "target.lua")))
@@ -87,6 +87,9 @@ def load_from(hip, target=None):
     send(HIP[hip], lkw={"squeeze": 1.0}); time.sleep(0.8)
     pos = list(LEFT_REST)
     send(pos, lkw={"squeeze": 1.0}); time.sleep(0.8)
+    for _ in range(cycles):                      # LT away from the gun: the pouch's next kind
+        send(pos, lkw={"squeeze": 1.0, "trigger": 1.0}); time.sleep(0.4)
+        send(pos, lkw={"squeeze": 1.0}); time.sleep(0.8)
     d = 9.0
     for _ in range(8):
         a = ask("-f", os.path.join(HERE, "port.lua")).split()
@@ -111,9 +114,10 @@ def main():
     for step in sys.argv[1:]:
         if step.startswith("fire"):
             fire(int(step[4:] or 1))
-        elif step.split("@")[0] in ("left", "right"):
+        elif step.split("@")[0].split("*")[0] in ("left", "right"):
             hip, _, at = step.partition("@")
-            load_from(hip, at if at.startswith("_") else SPOTS.get(at))
+            hip, _, cyc = hip.partition("*")
+            load_from(hip, at if at.startswith("_") else SPOTS.get(at), int(cyc or 0))
         elif step in ("open", "close"):
             drum_toggle()
         elif step == "tip":
