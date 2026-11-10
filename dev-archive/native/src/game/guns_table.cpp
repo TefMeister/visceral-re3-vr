@@ -38,10 +38,18 @@ constexpr SlideGun SLIDE_GUNS[] = {
 
 constexpr ShellGun SHELL_GUNS[] = {
     {1000, "_04", 31, {-0.001f, -0.030f, 0.148f}, 0.22f, "shotgun_w870", 2.0f},
+    // the MGL: no round of its own to show yet; the port is the middle of the drum (joints _01 + _02, read 2026-11-10)
+    {4100, "",    -1, { 0.000f,  0.051f, 0.261f}, 0.22f, "shotgun_w870", 2.0f},
+};
+
+// RE3 item numbers (read from the running game 2026-11-10): 37 Explosive, 38 Acid, 39 Flame, 36 Mine Rounds
+constexpr RoundGun ROUND_GUNS[] = {
+    {4100, {37, 38, 39, 36}},
 };
 } // namespace
 
 const MagGun* mag_gun(int wp) { for (const auto& m : MAG_GUNS) if (m.wp == wp) return &m; return nullptr; }
+const RoundGun* round_gun(int wp) { for (const auto& r : ROUND_GUNS) if (r.wp == wp) return &r; return nullptr; }
 const SlideGun* slide_gun(int wp) { for (const auto& s : SLIDE_GUNS) if (s.wp == wp) return &s; return nullptr; }
 const ShellGun* shell_gun(int wp) { for (const auto& s : SHELL_GUNS) if (s.wp == wp) return &s; return nullptr; }
 bool is_pump(int wp) { return wp == 1000; }
