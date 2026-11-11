@@ -1,6 +1,8 @@
 # Research index
 
-**Last `/gr` pass: 2026-11-07 (estate sweep) — CHECK-IN.** Inbox empty. REFramework since 10-26 (nightlies 01434-01438): hook-manager fixes, among them float and double arguments in hooked functions (#1853), nothing RE3-specific. One search for the unlock row named a second Nexus RE3 trainer (mod 9) listing shop points, page blocked (403), unchecked. No topic.
+**Last `/gr` pass: 2026-11-11 — CHECK-IN.** Nothing new: no REFramework nightly since 01438 (11-04), nothing RE3-specific in its issues (#1537, an old RE3 right-eye DLSS shimmer with pd-upscaler, got a one-character comment; this port runs DLSS off); one search for a new RE3 VR mod found none (a negative from one search).
+
+_Previous: **Last `/gr` pass: 2026-11-07 (estate sweep) — CHECK-IN.** Inbox empty. REFramework since 10-26 (nightlies 01434-01438): hook-manager fixes, among them float and double arguments in hooked functions (#1853), nothing RE3-specific. One search for the unlock row named a second Nexus RE3 trainer (mod 9) listing shop points, page blocked (403), unchecked. No topic._
 
 _Previous: **Last `/gr` pass: 2026-10-26 — CHECK-IN.** Inbox empty. REFramework moved once since 10-11 (nightly-01433, a Dragon's Dogma 2 window fix), nothing for RE3. One search on the `[FLAT]` unlock-every-weapon row: Capcom's paid unlock add-on and pre-unlocked saves are public; a Nexus "Ultimate Trainer" for RE3 (Raz0rrrr, runs on REFramework) may give items, but its page could not be read (403), so whether it unlocks the shop is unchecked. No topic._
 
