@@ -53,6 +53,18 @@ constexpr RoundGun ROUND_GUNS[] = {
 };
 } // namespace
 
+// the magazine's top rounds as a mesh part of their own (read from the model files 2026-11-11): part 7 on every RE3
+// handgun; the G19 and the G18 also have an extended magazine with rounds of its own (part 8). Pairs: {magazine, rounds}.
+constexpr MagRounds MAG_ROUNDS[] = {
+    {0,    1, 7, 4, 8},      // G19: standard magazine part 1 (joint _04), extended part 4 (joint _05)
+    {100,  2, 7, 1, 8},      // G18: standard part 2, extended part 1
+    {200, -1, 7, -1, -1},
+    {300, -1, 7, -1, -1},    // Samurai Edge (not a by-hand magazine gun yet: no effect until it is in MAG_GUNS)
+    {600, -1, 7, -1, -1},
+    {3000, -1, 7, -1, -1},
+};
+const MagRounds* mag_rounds(int wp) { for (const auto& m : MAG_ROUNDS) if (m.wp == wp) return &m; return nullptr; }
+
 const MagGun* mag_gun(int wp) { for (const auto& m : MAG_GUNS) if (m.wp == wp) return &m; return nullptr; }
 const RoundGun* round_gun(int wp) { for (const auto& r : ROUND_GUNS) if (r.wp == wp) return &r; return nullptr; }
 const SlideGun* slide_gun(int wp) { for (const auto& s : SLIDE_GUNS) if (s.wp == wp) return &s; return nullptr; }
