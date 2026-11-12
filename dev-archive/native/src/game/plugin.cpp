@@ -14,6 +14,7 @@
 #include "common.h"
 #include "exposure.h"
 #include "fire.h"
+#include "flashlight.h"
 #include "ghosthand.h"
 #include "guns.h"
 #ifdef VN_TOOLS
@@ -38,7 +39,7 @@ void on_frame() {
     static std::atomic<bool> installed{false};
     if (!installed.exchange(true)) {   // hooks need the type database: first game frame
         bridge::install(); shortcut::install(); suppress::install(); run::install(); fire::install(); pickup::install();
-        spread::install(); menu_tint::install();   // exposure: gen-1 RE3 never installed its hook (render_point only), kept as it ran
+        spread::install(); menu_tint::install(); flashlight::install();   // exposure: gen-1 RE3 never installed its hook (render_point only), kept as it ran
         guns::install();
         LOGI("%s layers 2-3 (the body, the guns): hooks installed", TAG);
     }
@@ -47,6 +48,7 @@ void on_frame() {
     subweapon::frame();     // RG never aims; the sub weapon on RG at the back
     guns::frame();          // the magazine, shells, the slide and the pump, who has the left hand
     holster::frame();
+    flashlight::frame();    // 2026-11-12: the torch in the hand (shared with RE2, src/hands/)
     suppress::frame();
     spread::frame();        // bullet spread tiers
     run::frame();
@@ -89,6 +91,6 @@ extern "C" __declspec(dllexport) bool reframework_plugin_initialize(const REFram
     param->functions->on_pre_application_entry("UpdateMotion", []() { guns::update_motion(); });   // the game's own pump animation cut
     param->functions->on_pre_application_entry("LockScene", []() { ladder::restore(false); menu_body::camera_point(false); });
     param->functions->on_post_application_entry("LockScene", []() { menu_body::late_write(); });
-    param->functions->on_post_application_entry("PrepareRendering", []() { ladder::restore(true); guns::render_point(); menu_body::camera_point(true); });
+    param->functions->on_post_application_entry("PrepareRendering", []() { ladder::restore(true); guns::render_point(); flashlight::render_point(); menu_body::camera_point(true); });
     return true;
 }
