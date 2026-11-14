@@ -18,3 +18,7 @@ Resident Evil 3 (2020) — Capcom. A legitimate copy is needed to use anything h
 ## Sources (2026-11-07)
 
 - **praydog**, REFramework commit history (hook-manager fixes since 2026-10-26) — https://github.com/praydog/REFramework
+
+## Sources (2026-11-14)
+
+- **praydog**, REFramework nightly 01439, incl. PR #1893 by **Dimcirui** — https://github.com/praydog/REFramework
