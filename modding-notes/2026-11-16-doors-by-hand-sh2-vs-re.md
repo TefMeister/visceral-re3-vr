@@ -1,0 +1,33 @@
+# 2026-11-16: opening doors with the hand: how SH2 does it, and what RE3 / RE2 doors are (Developer PC, Opus)
+
+Tefa: *"can you play sh2 and see how doors open with a hand stretched out and see if any of these can be ported over to re
+games, or is that something that is just not doable in re games, like collision between game world and vr hands"*; then
+*"the doors in re3 sewer save file, latest save, there is a door right behind Jill"*.
+
+## SH2 (read from the pack's scripts, not run) `[inferred-static 2026-11-16]`
+`mod/UnrealVRMod/SHProto-Win64-Shipping/scripts/libs/collision.lua` moves a small collider with each controller every frame
+by a sweep (`K2_SetWorldLocation(loc, sweep=true, hit)`); a blocking hit goes to `main.lua`'s contact callback (~line 3817):
+if the hit component's owner has a `DoorMovement` (`USHDoorMovementComponent`), the hand's speed along the swing direction
+around the hinge (up x radius) becomes `DoorMovement:AddPhysicForce(force * 0.1)`. It works because SH2's doors are
+angle-driven by a force the game itself already understands.
+
+## RE3's door behind Jill in the latest sewer save `[verified-live 2026-11-16, simulator, n=1 door]`
+`Door_3_602_603_00_gimmick`, 2.6 m behind Jill. Parts: `offline.gimmick.action.InteractBehavior` + `GimmickControl`
+(`requestStartGimmick`...) + `offline.escape.gimmick.action.EsGimmickDoor`, `MotionFsm2` and `MotionJackFsm2` (the open is a
+matched animation of Jill and the door), colliders `Fixed`, `FixedB`, `Moving`, `ForceClose`, a `SceneLoader` child (the next
+room is streamed as it opens), `AIMapShape`, `DoorOpened`. Joints `root`, `_00`, `_01`. The leaf (`_01`) is a rigid body,
+210 kg, in the body set `sm_door_steel_heavy.rbs`, whose only mode is `KeyFramedStates`: it follows the animation, it does not
+swing by itself; the set has `addForce`, `setDesiredMotor...`, but no free-swinging mode to switch to. RE2's doors near its
+save are the same family (`Door_2_1_..._gimmick` with `CollidersFixed / FixedB / Moving`).
+
+## What can be ported
+- **Hands meeting the world**: yes. RE Engine casts rays into the physics world from script (Village's `re8_vr.lua`
+  `via.physics.System castRay`, our `visceral_re8_magthrow.lua`); a sphere or ray from the shoulder to the hand finds what
+  the hand touches, and which object it is (a door gimmick, a wall).
+- **Touch-to-open (recommended)**: the hand pushed into a door's collider with some speed starts the door's own open, the
+  same thing A does (`GimmickControl` / the interaction). The game then plays its door, loads the next room and keeps its
+  enemies and AI map right. It will not swing with the hand: it opens the game's way once pushed.
+- **The door following the hand like SH2**: turning the leaf joint ourselves is possible to draw, but the game would not
+  know the door is open (its collision, the next room's loading, enemies, the AI map), so walking through could fail or
+  show an unloaded room. Not recommended; maybe for doors already standing open.
+- **A free-swinging physics door**: not available: the door's own body file has only the follow-the-animation mode.
