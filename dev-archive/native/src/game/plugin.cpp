@@ -28,6 +28,7 @@
 #include "pickup.h"
 #include "run.h"
 #include "shortcut.h"
+#include "sidestep.h"
 #include "spread.h"
 #include "subweapon.h"
 #include "suppress.h"
@@ -52,6 +53,7 @@ void on_frame() {
     suppress::frame();
     spread::frame();        // bullet spread tiers
     run::frame();
+    sidestep::frame();      // 2026-11-16: the side step, in place of the game's own dodge on the right stick click (Tefa)
     fire::frame();
     menu_body::frame();
     pickup::frame();
