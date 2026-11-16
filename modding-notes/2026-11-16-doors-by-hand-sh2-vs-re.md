@@ -47,3 +47,17 @@ save are the same family (`Door_2_1_..._gimmick` with `CollidersFixed / FixedB /
 game works out the door's angle from the body, to give it the hand instead. That is the undocumented-engine part:
 `MODEL: FABLE`.** A cheaper first test (Opus): turn the hinge joint ourselves after the game, just before drawing, and
 see whether its collision follows (if it does, the hand can push it visually on top of the game's own opening).
+
+## The hinge held by us (16:0x; Tefa: "or less ... so it's not even really visible but still registers and the world after it already loads in, but to the player it looks like a collision based door interaction")
+`[verified-live 2026-11-16, simulator, n=1]` A, then from 2.0 s to 7.0 s the hinge joint `_00` written to 10 degrees at
+LateUpdateBehavior, UpdatePhysics (pre) and BeginRendering (pre), 900 writes:
+- The hinge AND the door's moving colliders (`CollidersMoving`, a child of joint `_01`) read 10 degrees the whole time, while
+  the game's own angle had reached 61: **our angle is what is drawn**.
+- Jill pushed into the doorway walked straight through the 10-degree door: **the game's collision does not follow our
+  angle**; its own (open) door state lets her through. When our hold ended the door was already back at 0 (the game had
+  closed it meanwhile).
+**So Tefa's version is buildable:** the game opens the door (A, or the hand touching it pressing A for it) so the next room
+loads and the doorway is passable; WE draw the leaf: barely open at first, then pushed by the hand, never less than what
+the player's body needs to pass without clipping (we work that out from the player's place against the hinge), and back to
+the game's own angle when it closes. Parts: the hand touching a door (RE Engine ray / sphere cast, or distance to the
+door's leaf), the A for the door, the drawn angle each frame. `MODEL: OPUS` to build, flat checks then the simulator.
