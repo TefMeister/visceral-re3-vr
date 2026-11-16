@@ -31,3 +31,19 @@ save are the same family (`Door_2_1_..._gimmick` with `CollidersFixed / FixedB /
   know the door is open (its collision, the next room's loading, enemies, the AI map), so walking through could fail or
   show an unloaded room. Not recommended; maybe for doors already standing open.
 - **A free-swinging physics door**: not available: the door's own body file has only the follow-the-animation mode.
+
+## Tefa's option C, measured (same afternoon): "touching a door opens it just a little, like pressing A ... and after that the door follows hand collision, like it does follow leons body"
+`[verified-live 2026-11-16, simulator, n=1 each]` on the same door (hinge = joint `_00`, local yaw; `_01` is its child):
+- **A**: the door's motion bank 0 / id 20 starts with layer speed 0 (its frame is SET by the game, not played): 0 to ~61
+  degrees in ~0.7 s (frames 10-41), then it holds or creeps on slowly (~5 degrees a second, to 90 by ~6 s).
+- **The body pushes it**: Jill nudged through the doorway (1.6 m over 80 frames): the door went 62 -> 90 degrees in ~0.8 s,
+  following her, then **closed by itself** (90 -> 0 in ~2 s) once she was past. So the door does follow the body, as Tefa said.
+- **Our own write did not take**: `layer:set_Frame(60)` every LateUpdateBehavior for 2 s (180 writes): the door kept its own
+  slow creep (67 -> 78 degrees) and the frame read back 0 during the writes. The angle is set deeper than the motion layer's
+  frame (the door's behaviour tree / its push logic), after or instead of our write.
+- A closed door blocks the body (pushed into it, Jill stopped at it). From the far side A did not open it (3 tries).
+- Driving it: A only fired with Jill WALKED into place (stick), not when she was only moved there by script.
+**So option C looks possible in principle (the game already turns the door by the body), but needs the place where the
+game works out the door's angle from the body, to give it the hand instead. That is the undocumented-engine part:
+`MODEL: FABLE`.** A cheaper first test (Opus): turn the hinge joint ourselves after the game, just before drawing, and
+see whether its collision follows (if it does, the hand can push it visually on top of the game's own opening).
