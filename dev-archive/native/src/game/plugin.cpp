@@ -29,6 +29,7 @@
 #include "run.h"
 #include "shortcut.h"
 #include "sidestep.h"
+#include "doorpush.h"
 #include "spread.h"
 #include "subweapon.h"
 #include "suppress.h"
@@ -54,6 +55,7 @@ void on_frame() {
     spread::frame();        // bullet spread tiers
     run::frame();
     sidestep::frame();      // 2026-11-16: the side step, in place of the game's own dodge on the right stick click (Tefa)
+    doorpush::frame();      // 2026-11-16: the nearest door; a hand pressing on it opens it
     fire::frame();
     menu_body::frame();
     pickup::frame();
@@ -89,8 +91,9 @@ extern "C" __declspec(dllexport) bool reframework_plugin_initialize(const REFram
 #endif
     });
     // the held menu camera written right where the VR layer writes it, after its pass
-    param->functions->on_pre_application_entry("BeginRendering", []() { exposure::render_point(); guns::begin_render(); ghosthand::render_point(); menu_body::render_point(); });
+    param->functions->on_pre_application_entry("BeginRendering", []() { doorpush::render_point(); exposure::render_point(); guns::begin_render(); ghosthand::render_point(); menu_body::render_point(); });
     param->functions->on_pre_application_entry("UpdateMotion", []() { guns::update_motion(); });   // the game's own pump animation cut
+    param->functions->on_post_application_entry("UpdateMotion", []() { doorpush::after_motion(); });   // 2026-11-16: the door drawn by hand and body
     param->functions->on_pre_application_entry("LockScene", []() { ladder::restore(false); menu_body::camera_point(false); });
     param->functions->on_post_application_entry("LockScene", []() { menu_body::late_write(); });
     param->functions->on_post_application_entry("PrepareRendering", []() { ladder::restore(true); guns::render_point(); flashlight::render_point(); menu_body::camera_point(true); });

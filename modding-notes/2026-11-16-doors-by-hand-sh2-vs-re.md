@@ -61,3 +61,13 @@ loads and the doorway is passable; WE draw the leaf: barely open at first, then 
 the player's body needs to pass without clipping (we work that out from the player's place against the hinge), and back to
 the game's own angle when it closes. Parts: the hand touching a door (RE Engine ray / sphere cast, or distance to the
 door's leaf), the A for the door, the drawn angle each frame. `MODEL: OPUS` to build, flat checks then the simulator.
+
+## Built: RE3 b025 / RE2 b215 (16:2x-16:4x) `[verified-live 2026-11-16, simulator, n=1]`
+`src/hands/doorpush.cpp` (shared): the nearest door on the player's floor within 3 m (RE3 `GimmickOptionDoorSettings`, RE2
+`gimmick.action.GimmickDoor`); a hand pressing on the shut leaf = A for the game (`visceral_action_pulse()`, our
+REFramework); when the game's hinge angle (read at UpdateMotion post) leaves 0, ours is drawn from 1 degree, pushed by each
+wrist (10 cm) and the body (32 cm) when they reach or cross the leaf, never past 92, and brought down with the game's when
+it closes. RE3 on the simulator: the touch opened the door, drawn 1 degree while the game's ran 62 -> 89; walking through
+pushed ours 1 -> 80 following Jill; the game then shut it and ours went with it to 0. Not yet seen: the hand alone pushing
+(the robot arm stopped 13 cm short of the leaf from where Jill stood), and RE2 (its one tried door did not open on A).
+RE8: its doors are a different kind (not looked at yet).
