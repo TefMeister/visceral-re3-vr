@@ -71,6 +71,9 @@ const SlideGun* slide_gun(int wp) { for (const auto& s : SLIDE_GUNS) if (s.wp ==
 const ShellGun* shell_gun(int wp) { for (const auto& s : SHELL_GUNS) if (s.wp == wp) return &s; return nullptr; }
 bool is_pump(int wp) { return wp == 1000; }
 const char* pump_sfx(int) { return "shotgun_w870"; }
+// the M3's fore-end joint sits at the REAR end of its handle (simulator, side view, 2026-11-19): with the W-870's numbers the hand
+// gripped the handle's back edge; 7 cm further forward it is on the middle of the handle
+Vec3 pump_dock_shift(int wp) { return wp == 1000 ? Vec3{0.0f, 0.0f, 0.070f} : Vec3{0.0f, 0.0f, 0.0f}; }
 bool long_mag(int wp) { return wp == 2000 || wp == 2100; }   // the CQBR: the magazine sits ahead of the grip
 
 } // namespace vn::guns

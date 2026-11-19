@@ -69,3 +69,15 @@ recordings, so RE3 guns play RE2 sounds `[inferred-static]`.
 - Game: `C:/Steam/steamapps/common/RE3` (home PC). Music muted, window confirmed by Tefa 2026-10-10.
 - Plugin history: `D:/RE3 REFramework builds/plugin-history/` (+ MANIFEST.sha256).
 - No type dump for RE3 on disk yet; RE2's `il2cpp_dump.json` covers the shared `via.*` engine types.
+
+## The M3's left-hand hold on the pump (2026-11-19, b027)
+
+- The pump shotgun's fore-end is held from BELOW, palm up: RE2's shared hold (`src/guns/rack.cpp` `pump_shotgun()` /
+  `pump_dock()`, `settings_guns.h` `PUMP_DOCK_*`), which a gun gets when it is in `is_pump()` and in `SHELL_GUNS` (the M3; not
+  the MGL) `[verified-live 2026-11-19, simulator, n=2 launches]`.
+- The M3's fore-end joint `_01` is 0.425 m ahead of the gun's root and sits at the REAR end of the handle, so RE3 adds its
+  own shift, 7 cm forward: `pump_dock_shift()` in `src/game/guns_table.cpp` (each game answers it; RE2 answers zero)
+  `[measured live n=1; the side pictures n=2]`. The tuning file `reframework/data/visceral_pump_dock.txt` replaces the whole
+  place while it exists (the shift is then not added).
+- Dead ends / traps: measuring at the typewriter desk (the walls feature turns the gun away from the desk); changing the
+  hold while docked (the hand lets go, the gun swings). Note `modding-notes/2026-11-19-the-pump-held-from-below.md`.
