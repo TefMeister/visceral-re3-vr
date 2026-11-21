@@ -22,7 +22,8 @@ The resume point and the open work live on the private status board (`claude-mem
 - **praydog**: REFramework and its VR mode, which this whole mod runs on.
 - **Andyalpa**: the manual reload work and sounds that Visceral RE2 carries over.
 - **Ekey**: REE.PAK.Tool and its RE3 file-name list.
+- **[alphaZomega](https://github.com/alphazolam)**: [EMV Engine](https://github.com/alphazolam/EMV-Engine) (MIT), whose poser (freeze a joint, pose it by its local angles, re-apply it after the animation has run) is what our Hand Poser is modelled on; this mod's finger poses on the guns and at the grip spots come from that tool. Studied and written fresh; none of its code is included.
 - Everyone in Visceral RE2's credits list, whose work this port reuses.
 
-If someone should be credited here and is not, get in touch and it will be fixed as soon as possible. We honour
+If someone should be credited here and is not, open an issue on GitHub and it will be fixed as soon as possible. We honour
 correction and removal requests from rights holders.
