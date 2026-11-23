@@ -33,3 +33,12 @@ kept their morning time). VR Bench's B did not leave the list; the keyboard's Es
 
 As RE2 (the same code): no finger poses, no stage numbers, Hand Poser not installed and reading the old slots 57 / 58 here.
 See RE2's board row "HAND POSES THROUGH RELOAD AND RACK NEED BUILDING HERE FIRST": one design covers both games.
+
+## Build 28: the MGL's drum swings out to the LEFT (Tefa, watching the run)
+
+"grenade launcher in re 3 opens to the wrong side, should open to left not right". `game/guns_table.cpp`: the crane `_01`'s
+open angle was -100 (the comment said "to the gun's left"; it went right). Now +100. Checked by numbers
+(`tools/sim/q_re_local.lua`, the gun's joints in the gun's own frame): open, the drum `_02` sits at x +9.4 cm, closed at 0; the
+gun hand's wrist is at x -6, so +x is the gun's left `[verified-live 2026-11-23, robot, n=1]`. Muzzle-on pictures were too close
+to read. ⚠️ `build.sh --deploy` puts the repo's `re2_fw_config.txt` back, which has the render mode at 2 (Single Frame
+Multipass, the window stays frozen for pictures): set to 1 again by hand for this run.
