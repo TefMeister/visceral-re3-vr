@@ -25,3 +25,17 @@ G19 only; on the fault list. The log also said "out with 33 loaded" for the G19.
 
 - No picture judged the copied poses on the slide or the magazine (only the hand in the air, three sides: a curled hand).
 - The other RE3 guns (11, 21, 31, 42, 47) were not run tonight.
+
+## Build 31: the drum moved by the hand (Tefa, the same night)
+
+Tefa: *"have to open with motion, LG+LT held until it clicks, can either push closed from the handle or place hand on the drum
+and push close, always LG+LT for these actions. and hand should always ride along in any games on any weapoins, until said
+otherwise"*. Shared `guns/cylinder.cpp` (RE2's repo owns it): LG + LT on the drum TAKE it (either button may come last); while
+both stay held the drum follows the left CONTROLLER sideways (the drawn wrist is pinned to the drum, so it cannot be the measure:
+my first cut used it and nothing moved), `CYLINDER_TRAVEL_M` 9.4 cm of hand for the whole swing (the drum joint's own travel),
+clicks OPEN at 97 % (sound, buzz), and pushed back clicks SHUT; let go part way it stays (the gun will not fire until shut);
+latches at both ends so a hand's wobble does not leave it a hair open. The one-press toggle and the swing by itself are gone.
+Run `[verified-live 2026-11-23, robot, n=1 after the latch fix]`: "drum taken (LG + LT)", "clicked OPEN (pulled out by the
+hand)", "clicked SHUT (pushed back by the hand)", "let go at 0% open (shut)"; the left hand's stage stayed 6 (on the drum) the
+whole way. NOT done: closing "from the handle" (which part is the handle, and which way it pushes: asked); the drawn hand is
+not docked to the drum (it follows the controller; within the swing it stays 10-13 cm from the drum joint, as when it took it).
