@@ -47,3 +47,6 @@
 
 # ---- layer 3: the guns (the shared src/guns/, RE3's table in src/game/guns_table.cpp) -------------------------------
 # No new files: the gun code is in the plugin. Deploy with --layer 3 so the build is named for it.
+# 2026-11-23: Hand Poser's game half (the hand-poser-vr repo beside this one): the plugin tells it the gun and the left hand's stage
+# (src/guns/stage.h), so every reload and rack stage keeps its own finger pose, as in Village. Its data folder is the player's.
+3 repo:../../../hand-poser-vr/reframework/autorun/hand_poser.lua   reframework/autorun/hand_poser.lua
