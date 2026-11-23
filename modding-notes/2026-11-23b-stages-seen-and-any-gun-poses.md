@@ -39,3 +39,17 @@ Run `[verified-live 2026-11-23, robot, n=1 after the latch fix]`: "drum taken (L
 hand)", "clicked SHUT (pushed back by the hand)", "let go at 0% open (shut)"; the left hand's stage stayed 6 (on the drum) the
 whole way. NOT done: closing "from the handle" (which part is the handle, and which way it pushes: asked); the drawn hand is
 not docked to the drum (it follows the controller; within the swing it stays 10-13 cm from the drum joint, as when it took it).
+
+## Build 32: round its hinge, and from the front grip (Tefa: "push down and to the right to close, left and up to open, yes the grip")
+
+- The MGL's hinge (`_01`) sits 9.6 cm ABOVE the drum (`_02`), so a 100 degree swing carries the drum 9.4 cm left AND about
+  11 cm up: build 31 measured the hand along the gun's left only. Now `cylinder.cpp` learns the hinge once per gun with the
+  drum shut (the log: "hinge at 0.0 14.6 16.1 cm, the drum shut at 0.0 5.1 26.1 cm (the gun's frame)"), and the drum's angle
+  follows the left CONTROLLER's angle round the hinge's axis (room space). Up and left opens, down and right closes.
+- LG + LT also take the drum at the place it sits shut: the front grip hangs just ahead of the drum, so with the drum open the
+  hand on the grip (15 cm from the open drum) takes it and pushes it shut.
+- Run `[verified-live 2026-11-23, robot, n=1 each]` (`tools/sim/drumtest.py` in the Village repo): from the drum, the hand
+  round the hinge: "clicked OPEN (pulled up and out by the hand)", the drawn wrist stayed 10.5 to 11 cm from the drum the whole
+  way (the hand rides along with it); from the grip, the hand down and right: the drum back to shut. The robot's arc is not
+  exact (its room is turned and the drawn wrist does not follow the controller one to one), so one close stopped at 11 %
+  short of the click: a hand on the drum carries it round its true arc; the wearer's to feel.
