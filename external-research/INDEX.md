@@ -1,6 +1,8 @@
 # Research index
 
-**Last `/gr` pass: 2026-11-14 — CHECK-IN.** Inbox empty. Nightly 01439 (11-12, #1893: Lua script reset fix), nothing RE3-specific in REFramework's issues; the "Failed to sync actions: XR_SESSION_NOT_FOCUSED" line is explained in visceral-re8-vr's topic (a focus change, harmless); no public RE Engine VR mod shows cutscenes on a flat screen (three searches). No topic.
+**Last `/gr` pass: 2026-11-25 — CHECK-IN.** Inbox empty. REFramework: nightlies 01441 (11-17, a startup deadlock fix in kananlib) and 01451 (11-23, build fix); nothing RE3-specific.
+
+_Previous: **Last `/gr` pass: 2026-11-14 — CHECK-IN.** Inbox empty. Nightly 01439 (11-12, #1893: Lua script reset fix), nothing RE3-specific in REFramework's issues; the "Failed to sync actions: XR_SESSION_NOT_FOCUSED" line is explained in visceral-re8-vr's topic (a focus change, harmless); no public RE Engine VR mod shows cutscenes on a flat screen (three searches). No topic._
 
 _Previous: **Last `/gr` pass: 2026-11-11 — CHECK-IN.** Nothing new: no REFramework nightly since 01438 (11-04), nothing RE3-specific in its issues (#1537, an old RE3 right-eye DLSS shimmer with pd-upscaler, got a one-character comment; this port runs DLSS off); one search for a new RE3 VR mod found none (a negative from one search)._
 
